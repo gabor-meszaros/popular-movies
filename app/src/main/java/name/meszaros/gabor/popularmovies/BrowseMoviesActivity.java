@@ -12,7 +12,6 @@ public class BrowseMoviesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Context context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_movies);
 
@@ -22,6 +21,7 @@ public class BrowseMoviesActivity extends AppCompatActivity {
 
         mMoviesRecyclerView.setAdapter(adapter);
 
+        final Context context = this;
         final int spanCount = 2;
         final GridLayoutManager layoutManager = new GridLayoutManager(context, spanCount);
 

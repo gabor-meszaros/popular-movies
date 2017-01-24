@@ -59,7 +59,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
      */
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView moviePoster;
+        private ImageView mMoviePoster;
 
         private final Context mContext;
 
@@ -67,12 +67,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             super(itemView);
 
             mContext = context;
-            moviePoster = (ImageView) itemView.findViewById(R.id.tv_movie_item_poster);
+            mMoviePoster = (ImageView) itemView.findViewById(R.id.tv_movie_item_poster);
         }
 
         public void bind(Movie movie) {
             final String posterLinkToBind = movie.getPosterLink();
-            Picasso.with(mContext).load(posterLinkToBind).into(moviePoster);
+            Picasso.with(mContext).load(posterLinkToBind).into(mMoviePoster);
         }
     }
 }

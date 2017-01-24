@@ -4,14 +4,28 @@ import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * Created by Gabor on 1/24/2017.
  */
 public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
     private static final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
+    private static final String THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3/";
 
     private Listener mListener;
+
+    private TheMovieDbService mTheMovieDbService;
 
     interface Listener {
         void onFetchMoviesFinished(Movie[] movies);
@@ -19,27 +33,35 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
     public FetchMoviesTask(Listener listener) {
         mListener = listener;
+
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(THE_MOVIE_DB_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final Class<TheMovieDbService> theMovieDbServiceDefinition = TheMovieDbService.class;
+
+        mTheMovieDbService = retrofit.create(theMovieDbServiceDefinition);
     }
 
     @Override
     protected Movie[] doInBackground(Void... params) {
-        // Make it look like a real network call
-        final int aSecondInMilliseconds = 1000;
-        SystemClock.sleep(aSecondInMilliseconds);
+        final String apiKey = BuildConfig.THE_MOVIE_DB_API_KEY;
+        final Call<MovieListResponse> popularMoviesCall = mTheMovieDbService.getPopularMovies(apiKey);
 
-        Movie[] dummyMovies = {
-                new Movie("Rogue One", "https://images-na.ssl-images-amazon.com/images/M/MV5BMjEwMzMxODIzOV5BMl5BanBnXkFtZTgwNzg3OTAzMDI@._V1_SY1000_SX675_AL_.jpg"),
-                new Movie("The Dark Knight", "https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg"),
-                new Movie("Pulp Fiction", "https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxMTA5OTAzMl5BMl5BanBnXkFtZTgwNjA5MDc3NjE@._V1_SY1000_CR0,0,673,1000_AL_.jpg"),
-                new Movie("Passangers", "https://images-na.ssl-images-amazon.com/images/M/MV5BMTk4MjU3MDIzOF5BMl5BanBnXkFtZTgwMjM2MzY2MDI@._V1_SY1000_CR0,0,675,1000_AL_.jpg"),
-                new Movie("Forrest Gump", "https://images-na.ssl-images-amazon.com/images/M/MV5BYThjM2MwZGMtMzg3Ny00NGRkLWE4M2EtYTBiNWMzOTY0YTI4XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SY1000_CR0,0,757,1000_AL_.jpg"),
-                new Movie("Moana", "https://images-na.ssl-images-amazon.com/images/M/MV5BMjI4MzU5NTExNF5BMl5BanBnXkFtZTgwNzY1MTEwMDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg"),
-                new Movie("Fight Club", "https://images-na.ssl-images-amazon.com/images/M/MV5BMzc1YmU2ZjEtYWIwMC00ZjM3LWI0NTctMDVlNGQ3YmYwMzE5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SY999_CR0,0,704,999_AL_.jpg"),
-                new Movie("Frozen", "https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ1MjQwMTE5OF5BMl5BanBnXkFtZTgwNjk3MTcyMDE@._V1_SY1000_CR0,0,674,1000_AL_.jpg"),
-                new Movie("Arrival", "https://images-na.ssl-images-amazon.com/images/M/MV5BMTExMzU0ODcxNDheQTJeQWpwZ15BbWU4MDE1OTI4MzAy._V1_SY1000_CR0,0,640,1000_AL_.jpg")
-        };
+        try {
+            final Response<MovieListResponse> response = popularMoviesCall.execute();
+            if (response.isSuccessful()) {
+                final List<Movie> movies = response.body().getMovies();
 
-        return dummyMovies;
+                return movies.toArray(new Movie[0]);
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "The Movie DB service connection error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override

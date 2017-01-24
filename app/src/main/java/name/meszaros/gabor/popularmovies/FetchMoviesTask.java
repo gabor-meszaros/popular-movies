@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Gabor on 1/24/2017.
+ * Background task to fetch movies from The Movie DB service.
  */
 public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 

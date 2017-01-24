@@ -37,6 +37,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return viewHolder;
     }
 
+    public void setMoviesData(Movie[] movies) {
+        this.mMovies = movies;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final Movie movie = mMovies[position];

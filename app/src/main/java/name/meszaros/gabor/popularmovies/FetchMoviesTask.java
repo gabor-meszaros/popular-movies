@@ -66,15 +66,6 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
     @Override
     protected void onPostExecute(Movie[] movies) {
-        reportResultToTheCaller(movies);
-    }
-
-    @Override
-    protected void onCancelled() {
-        reportResultToTheCaller(null);
-    }
-
-    private void reportResultToTheCaller(Movie[] movies) {
         if (null == mListener) {
             Log.w(LOG_TAG, "Nobody is listening for FetchMoviesTask.");
         }

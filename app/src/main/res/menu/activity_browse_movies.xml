@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".BrowseMoviesActivity">
     <item
-        android:id="@+id/action_switch_popular"
+        android:id="@+id/menu_switch_popular"
         android:orderInCategory="1"
         android:title="@string/action_switch_popular" />
     <item
-        android:id="@+id/action_switch_highest_rated"
+        android:id="@+id/menu_switch_highest_rated"
         android:orderInCategory="2"
         android:title="@string/action_switch_highest_rated" />
 </menu>

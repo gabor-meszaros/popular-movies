@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class BrowseMoviesActivity extends AppCompatActivity
         implements FetchMoviesTask.Listener, MoviesAdapter.OnClickListener {
@@ -30,9 +29,9 @@ public class BrowseMoviesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_movies);
 
-        mErrorDisplayTextView = (TextView) findViewById(R.id.tv_error_display);
-        mLoadProgressBar = (ProgressBar) findViewById(R.id.pb_load_movies);
-        mMoviesRecyclerView = (RecyclerView) findViewById(R.id.rv_movies);
+        mErrorDisplayTextView = (TextView) findViewById(R.id.text_error_display);
+        mLoadProgressBar = (ProgressBar) findViewById(R.id.progress_bar_load_movies);
+        mMoviesRecyclerView = (RecyclerView) findViewById(R.id.recycler_movies);
 
         final MoviesAdapter.OnClickListener listener = this;
         mAdapter = new MoviesAdapter(listener);
@@ -59,10 +58,10 @@ public class BrowseMoviesActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.action_switch_popular:
+            case R.id.menu_switch_popular:
                 loadMovies(FetchMoviesTask.LIST_POPULAR);
                 break;
-            case R.id.action_switch_highest_rated:
+            case R.id.menu_switch_highest_rated:
                 loadMovies(FetchMoviesTask.LIST_TOP_RATED);
                 break;
             default:

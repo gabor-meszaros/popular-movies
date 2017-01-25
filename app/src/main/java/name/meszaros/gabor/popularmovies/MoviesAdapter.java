@@ -76,7 +76,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             super(itemView);
 
             mContext = context;
-            mMoviePoster = (ImageView) itemView.findViewById(R.id.tv_movie_item_poster);
+            mMoviePoster = (ImageView) itemView.findViewById(R.id.image_movie_item_poster);
             mMoviePoster.setOnClickListener(this);
         }
 

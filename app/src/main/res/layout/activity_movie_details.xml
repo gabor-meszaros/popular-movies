@@ -11,7 +11,7 @@
     tools:context="name.meszaros.gabor.popularmovies.MovieDetailsActivity">
 
     <TextView
-        android:id="@+id/tv_movie_title"
+        android:id="@+id/text_movie_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

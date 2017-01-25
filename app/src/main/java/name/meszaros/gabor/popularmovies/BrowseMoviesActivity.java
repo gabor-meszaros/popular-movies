@@ -42,8 +42,7 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
 
         mMoviesRecyclerView.setLayoutManager(layoutManager);
 
-        showLoadProgressBar();
-        new FetchMoviesTask(this).execute();
+        loadPopularMovies();
     }
 
     @Override
@@ -58,7 +57,7 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
         final int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_switch_popular:
-                Toast.makeText(this, "Switch popular selected.", Toast.LENGTH_SHORT).show();
+                loadPopularMovies();
                 break;
             case R.id.action_switch_highest_rated:
                 Toast.makeText(this, "Switch highest rated selected.", Toast.LENGTH_SHORT).show();
@@ -85,6 +84,11 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
                 showErrorDisplay();
             }
         }
+    }
+
+    private void loadPopularMovies() {
+        showLoadProgressBar();
+        new FetchMoviesTask(this).execute();
     }
 
     private void showErrorDisplay() {

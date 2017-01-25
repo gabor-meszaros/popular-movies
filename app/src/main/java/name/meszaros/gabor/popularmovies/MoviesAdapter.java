@@ -2,6 +2,7 @@ package name.meszaros.gabor.popularmovies;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,19 @@ import com.squareup.picasso.Picasso;
  * Adapter for providing movies for the RecyclerView.
  */
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
+    private final static String LOG_TAG = MoviesAdapter.class.getSimpleName();
+
+    public interface OnClickListener {
+        void onMovieItemClick(Movie movie);
+    }
 
     private Movie[] mMovies;
 
-    public MoviesAdapter(Movie[] movies) {
-        mMovies = movies;
+    private MoviesAdapter.OnClickListener mListener;
+
+    public MoviesAdapter(MoviesAdapter.OnClickListener listener) {
+        mMovies = null;
+        mListener = listener;
     }
 
     @Override
@@ -57,7 +66,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     /**
      * View holder for movie items in the RecyclerView.
      */
-    public static class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView mMoviePoster;
 
@@ -68,11 +77,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
             mContext = context;
             mMoviePoster = (ImageView) itemView.findViewById(R.id.tv_movie_item_poster);
+            mMoviePoster.setOnClickListener(this);
         }
 
         public void bind(Movie movie) {
             final String posterLinkToBind = movie.getPosterLink();
             Picasso.with(mContext).load(posterLinkToBind).into(mMoviePoster);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (null != mMovies) {
+                final int position = getAdapterPosition();
+                final Movie movie = mMovies[position];
+                mListener.onMovieItemClick(movie);
+            } else {
+                Log.wtf(LOG_TAG, "OnClick handler call with empty movie list.");
+            }
         }
     }
 }

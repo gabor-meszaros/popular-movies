@@ -14,7 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BrowseMoviesActivity extends AppCompatActivity implements FetchMoviesTask.Listener {
+public class BrowseMoviesActivity extends AppCompatActivity
+        implements FetchMoviesTask.Listener, MoviesAdapter.OnClickListener {
 
     private static final String LOG_TAG = BrowseMoviesActivity.class.getSimpleName();
 
@@ -32,7 +33,8 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
         mLoadProgressBar = (ProgressBar) findViewById(R.id.pb_load_movies);
         mMoviesRecyclerView = (RecyclerView) findViewById(R.id.rv_movies);
 
-        mAdapter = new MoviesAdapter(null);
+        final MoviesAdapter.OnClickListener listener = this;
+        mAdapter = new MoviesAdapter(listener);
 
         mMoviesRecyclerView.setAdapter(mAdapter);
 
@@ -111,5 +113,10 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
         mLoadProgressBar.setVisibility(View.INVISIBLE);
 
         mMoviesRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onMovieItemClick(Movie movie) {
+        Toast.makeText(this, movie.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }

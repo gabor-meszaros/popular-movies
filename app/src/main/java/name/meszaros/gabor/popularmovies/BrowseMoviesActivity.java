@@ -119,8 +119,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
     @Override
     public void onMovieItemClick(Movie movie) {
         final Intent movieDetailsIntent = new Intent(this, MovieDetailsActivity.class);
-        movieDetailsIntent.putExtra(Intent.EXTRA_TEXT, movie.getTitle());
+        movieDetailsIntent.putExtra(MovieDetailsActivity.INTENT_DATA, movie);
         startActivity(movieDetailsIntent);
-
     }
 }

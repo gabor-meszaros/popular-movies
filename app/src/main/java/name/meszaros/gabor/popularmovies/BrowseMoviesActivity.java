@@ -1,6 +1,7 @@
 package name.meszaros.gabor.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -117,6 +118,9 @@ public class BrowseMoviesActivity extends AppCompatActivity
 
     @Override
     public void onMovieItemClick(Movie movie) {
-        Toast.makeText(this, movie.getTitle(), Toast.LENGTH_SHORT).show();
+        final Intent movieDetailsIntent = new Intent(this, MovieDetailsActivity.class);
+        movieDetailsIntent.putExtra(Intent.EXTRA_TEXT, movie.getTitle());
+        startActivity(movieDetailsIntent);
+
     }
 }

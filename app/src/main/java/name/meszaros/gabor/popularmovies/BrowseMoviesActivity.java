@@ -42,7 +42,7 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
 
         mMoviesRecyclerView.setLayoutManager(layoutManager);
 
-        loadPopularMovies();
+        loadMovies(FetchMoviesTask.LIST_POPULAR);
     }
 
     @Override
@@ -57,10 +57,10 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
         final int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_switch_popular:
-                loadPopularMovies();
+                loadMovies(FetchMoviesTask.LIST_POPULAR);
                 break;
             case R.id.action_switch_highest_rated:
-                Toast.makeText(this, "Switch highest rated selected.", Toast.LENGTH_SHORT).show();
+                loadMovies(FetchMoviesTask.LIST_TOP_RATED);
                 break;
             default:
                 Log.w(LOG_TAG, "Menu selection is not handled. ItemId: " + itemId);
@@ -86,9 +86,10 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
         }
     }
 
-    private void loadPopularMovies() {
+    private void loadMovies(int listType) {
         showLoadProgressBar();
-        new FetchMoviesTask(this).execute();
+        final FetchMoviesTask.Listener listener = this;
+        new FetchMoviesTask(listener, listType).execute();
     }
 
     private void showErrorDisplay() {

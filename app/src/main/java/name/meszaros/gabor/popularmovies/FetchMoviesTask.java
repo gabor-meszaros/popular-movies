@@ -21,7 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
     private static final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
-    private static final String THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3/";
 
     private Listener mListener;
 
@@ -35,7 +34,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
         mListener = listener;
 
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(THE_MOVIE_DB_BASE_URL)
+                .baseUrl(TheMovieDbService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

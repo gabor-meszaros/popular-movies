@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Popular Movies</string>
 
+    <!-- Browse Movies Activity -->
+    <string name="error_message_no_movies">Cannot load movies from the internet. Please try later.</string>
+
     <!-- Browse Movies Menu -->
     <string name="action_switch_popular">Most Popular</string>
     <string name="action_switch_highest_rated">Highest Rated</string>

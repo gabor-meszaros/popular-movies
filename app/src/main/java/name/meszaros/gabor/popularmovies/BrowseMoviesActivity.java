@@ -9,12 +9,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BrowseMoviesActivity extends AppCompatActivity implements FetchMoviesTask.Listener {
 
     private static final String LOG_TAG = BrowseMoviesActivity.class.getSimpleName();
 
+    private TextView mErrorDisplayTextView;
+    private ProgressBar mLoadProgressBar;
     private RecyclerView mMoviesRecyclerView;
     private MoviesAdapter mAdapter;
 
@@ -23,7 +28,9 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_movies);
 
-        mMoviesRecyclerView = (RecyclerView) findViewById( R.id.rv_movies );
+        mErrorDisplayTextView = (TextView) findViewById(R.id.tv_error_display);
+        mLoadProgressBar = (ProgressBar) findViewById(R.id.pb_load_movies);
+        mMoviesRecyclerView = (RecyclerView) findViewById(R.id.rv_movies);
 
         mAdapter = new MoviesAdapter(null);
 
@@ -35,6 +42,7 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
 
         mMoviesRecyclerView.setLayoutManager(layoutManager);
 
+        showLoadProgressBar();
         new FetchMoviesTask(this).execute();
     }
 
@@ -63,8 +71,40 @@ public class BrowseMoviesActivity extends AppCompatActivity implements FetchMovi
 
     @Override
     public void onFetchMoviesFinished(Movie[] movies) {
-        mAdapter.setMoviesData(movies);
-        // We don't need to notify the Adapter's listeners as the setMoviesData()
-        // had already done that for us
+        final boolean moviesDisplayed = (0 != mAdapter.getItemCount());
+        final boolean newMoviesAvailable = (null != movies);
+        if (newMoviesAvailable) {
+            showMoviesList();
+            mAdapter.setMoviesData(movies);
+            // We don't need to notify the Adapter's listeners as the setMoviesData()
+            // had already done that for us
+        } else { // No new movies available
+            if (moviesDisplayed) {
+                Log.w(LOG_TAG, "No new data available to refresh movies list. Kept old movies.");
+            } else { // There are no movies in our RecyclerView
+                showErrorDisplay();
+            }
+        }
+    }
+
+    private void showErrorDisplay() {
+        mLoadProgressBar.setVisibility(View.INVISIBLE);
+        mMoviesRecyclerView.setVisibility(View.INVISIBLE);
+
+        mErrorDisplayTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void showLoadProgressBar() {
+        mMoviesRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorDisplayTextView.setVisibility(View.INVISIBLE);
+
+        mLoadProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void showMoviesList() {
+        mErrorDisplayTextView.setVisibility(View.INVISIBLE);
+        mLoadProgressBar.setVisibility(View.INVISIBLE);
+
+        mMoviesRecyclerView.setVisibility(View.VISIBLE);
     }
 }

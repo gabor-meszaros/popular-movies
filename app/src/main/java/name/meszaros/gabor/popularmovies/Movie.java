@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * The Movie class represent the model of a movie.
  */
@@ -15,16 +17,39 @@ public final class Movie implements Parcelable {
     @SerializedName("title")
     private String mTitle;
 
+    @SerializedName("original_title")
+    private String mOriginalTitle;
+
+    @SerializedName("overview")
+    private String mSynopsis;
+
+    @SerializedName("vote_average")
+    private String mUserRating;
+
+    @SerializedName("release_date")
+    private Date mReleaseDate;
+
     @SerializedName("poster_path")
     private String mPosterPath;
 
-    public Movie(String title, String posterPath) {
-        this.mTitle = title;
-        this.mPosterPath = posterPath;
-    }
-
     public String getTitle() {
         return mTitle;
+    }
+
+    public String getOriginalTitle() {
+        return mOriginalTitle;
+    }
+
+    public String getSynopsis() {
+        return mSynopsis;
+    }
+
+    public String getUserRating() {
+        return mUserRating;
+    }
+
+    public Date getReleaseDate() {
+        return mReleaseDate;
     }
 
     public String getPosterLink() {
@@ -39,6 +64,10 @@ public final class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mTitle);
+        dest.writeString(mOriginalTitle);
+        dest.writeString(mSynopsis);
+        dest.writeString(mUserRating);
+        dest.writeLong(mReleaseDate.getTime()); // Faster than using the Serializable interface
         dest.writeString(mPosterPath);
     }
 
@@ -49,6 +78,10 @@ public final class Movie implements Parcelable {
      */
     public Movie(Parcel in) {
         mTitle = in.readString();
+        mOriginalTitle = in.readString();
+        mSynopsis = in.readString();
+        mUserRating = in.readString();
+        mReleaseDate = new Date(in.readLong()); // Faster than using the Serializable interface
         mPosterPath = in.readString();
     }
 

@@ -1,6 +1,7 @@
 package name.meszaros.gabor.popularmovies;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -43,8 +44,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
             Picasso.with(this).load(posterLink).into(mPoster);
 
             mSimpleTitleTextView.setText(movie.getTitle());
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY");
+            mReleaseDateTextView.setText("Release date: " + dateFormat.format(movie.getReleaseDate()));
             mRating.setText("User rating: " + movie.getUserRating());
-            mReleaseDateTextView.setText("Release date: " + movie.getReleaseDate().toString());
             mSynopsisTextView.setText(movie.getSynopsis());
         }
     }

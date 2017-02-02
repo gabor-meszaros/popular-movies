@@ -8,6 +8,11 @@
     <dimen name="text_size_subtitle">18sp</dimen>
     <dimen name="text_size_normal">14dp</dimen>
 
+    <!-- Column space size -->
+    <!-- It needs to be used as a padding of the right side of the left element and the left side
+    of the right element. -->
+    <dimen name="column_space_size">4dp</dimen>
+
     <!-- Placeholder values those need to be modified from the code. -->
     <!-- I make them small in order to make it visibile if you forgot to modify them in the code. -->
     <dimen name="placeholder_px_value_set_in_the_code">2px</dimen>

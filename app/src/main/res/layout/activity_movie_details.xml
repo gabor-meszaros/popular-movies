@@ -36,8 +36,7 @@
             android:layout_width="@dimen/placeholder_dp_value_set_in_the_code"
             android:layout_height="@dimen/placeholder_dp_value_set_in_the_code"
             android:layout_alignParentLeft="true"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
+            android:paddingRight="@dimen/column_space_size"
             android:layout_below="@id/text_movie_original_title" />
 
         <TextView
@@ -46,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_movie_original_title"
             android:textStyle="bold"
+            android:paddingLeft="@dimen/column_space_size"
             android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_movie_simple_title"
+            android:paddingLeft="@dimen/column_space_size"
             android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
@@ -62,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_movie_release_date"
+            android:paddingLeft="@dimen/column_space_size"
             android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
@@ -73,4 +75,5 @@
             android:layout_below="@id/image_movie_poster" />
 
     </RelativeLayout>
+
 </ScrollView>

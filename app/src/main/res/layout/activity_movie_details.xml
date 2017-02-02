@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/image_movie_poster"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/placeholder_dp_value_set_in_the_code"
+            android:layout_height="@dimen/placeholder_dp_value_set_in_the_code"
             android:layout_alignParentLeft="true"
             android:paddingRight="8dp"
             android:paddingBottom="8dp"

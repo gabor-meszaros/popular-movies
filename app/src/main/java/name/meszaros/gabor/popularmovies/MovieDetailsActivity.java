@@ -15,9 +15,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private TextView mTitleTextView;
     private TextView mOriginalTitleTextView;
-    private ImageView mPoster;
+    private ImageView mPosterImageView;
     private TextView mSimpleTitleTextView;
-    private TextView mRating;
+    private TextView mRatingTextView;
     private TextView mReleaseDateTextView;
     private TextView mSynopsisTextView;
 
@@ -28,9 +28,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         mTitleTextView = (TextView) findViewById(R.id.text_movie_title);
         mOriginalTitleTextView = (TextView) findViewById(R.id.text_movie_original_title);
-        mPoster = (ImageView) findViewById(R.id.image_movie_poster);
+        mPosterImageView = (ImageView) findViewById(R.id.image_movie_poster);
         mSimpleTitleTextView = (TextView) findViewById(R.id.text_movie_simple_title);
-        mRating = (TextView) findViewById(R.id.text_movie_rating);
+        mRatingTextView = (TextView) findViewById(R.id.text_movie_rating);
         mReleaseDateTextView = (TextView) findViewById(R.id.text_movie_release_date);
         mSynopsisTextView = (TextView) findViewById(R.id.text_movie_synopsis);
 
@@ -41,12 +41,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
             mOriginalTitleTextView.setText("(" + movie.getOriginalTitle() + ")");
 
             final String posterLink = movie.getPosterLink();
-            Picasso.with(this).load(posterLink).into(mPoster);
+            Picasso.with(this).load(posterLink).into(mPosterImageView);
 
             mSimpleTitleTextView.setText(movie.getTitle());
             final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY");
             mReleaseDateTextView.setText("Release date: " + dateFormat.format(movie.getReleaseDate()));
-            mRating.setText("User rating: " + movie.getUserRating());
+            mRatingTextView.setText("User rating: " + movie.getUserRating());
             mSynopsisTextView.setText(movie.getSynopsis());
         }
     }

@@ -11,4 +11,7 @@
     <dimen name="placeholder_pt_value_set_in_the_code">2pt</dimen>
     <dimen name="placeholder_dp_value_set_in_the_code">2dp</dimen>
     <dimen name="placeholder_sp_value_set_in_the_code">2sp</dimen>
+
+    <!-- Default progress bar size. I cannot find any recommendations in the Android Design guidelines. -->
+    <dimen name="progress_bar_dimensions">42dp</dimen>
 </resources>

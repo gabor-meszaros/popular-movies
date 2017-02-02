@@ -15,6 +15,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String INTENT_DATA = Movie.class.getName();
 
+    private static final double MOVIE_POSTER_WIDTH_HEIGHT_RATIO = 40.0 / 27.0;
+    private static final double SCREEN_WIDTH_POSTER_WIDTH_RATIO = 0.4;
+
     private TextView mTitleTextView;
     private TextView mOriginalTitleTextView;
     private ImageView mPosterImageView;
@@ -28,31 +31,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        mTitleTextView = (TextView) findViewById(R.id.text_movie_title);
-        mOriginalTitleTextView = (TextView) findViewById(R.id.text_movie_original_title);
-        mPosterImageView = (ImageView) findViewById(R.id.image_movie_poster);
-        mSimpleTitleTextView = (TextView) findViewById(R.id.text_movie_simple_title);
-        mRatingTextView = (TextView) findViewById(R.id.text_movie_rating);
-        mReleaseDateTextView = (TextView) findViewById(R.id.text_movie_release_date);
-        mSynopsisTextView = (TextView) findViewById(R.id.text_movie_synopsis);
+        initializeViews();
 
         final Intent intent = getIntent();
         if (null != intent && intent.hasExtra(INTENT_DATA)) {
             final Movie movie = (Movie) intent.getParcelableExtra(INTENT_DATA);
             mTitleTextView.setText(movie.getTitle());
             mOriginalTitleTextView.setText("(" + movie.getOriginalTitle() + ")");
-
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            final int displayWidth = displayMetrics.widthPixels;
-            final double screenPosterRatio = 0.4;
-            final int posterWidth = (int) (displayWidth * screenPosterRatio);
-            final double moviePosterRatio = 40.0 / 27.0;
-            final int posterHeight = (int) (posterWidth * moviePosterRatio);
-            final ViewGroup.LayoutParams layoutParams = mPosterImageView.getLayoutParams();
-            layoutParams.width = posterWidth;
-            layoutParams.height = posterHeight;
-            mPosterImageView.requestLayout();
 
             final String posterLink = movie.getPosterLink();
             Picasso.with(this).load(posterLink).into(mPosterImageView);
@@ -63,5 +48,46 @@ public class MovieDetailsActivity extends AppCompatActivity {
             mRatingTextView.setText("User rating: " + movie.getUserRating());
             mSynopsisTextView.setText(movie.getSynopsis());
         }
+    }
+
+    private void initializeViews() {
+        mTitleTextView = (TextView) findViewById(R.id.text_movie_title);
+        mOriginalTitleTextView = (TextView) findViewById(R.id.text_movie_original_title);
+        initializePosterImageView();
+        mSimpleTitleTextView = (TextView) findViewById(R.id.text_movie_simple_title);
+        mRatingTextView = (TextView) findViewById(R.id.text_movie_rating);
+        mReleaseDateTextView = (TextView) findViewById(R.id.text_movie_release_date);
+        mSynopsisTextView = (TextView) findViewById(R.id.text_movie_synopsis);
+    }
+
+    private void initializePosterImageView() {
+        mPosterImageView = (ImageView) findViewById(R.id.image_movie_poster);
+
+        final int posterWidth = calculatePosterWidthInPixel();
+        final int posterHeight = calculatePosterHeightInPixel(posterWidth);
+
+        setImageViewDimensionInPixels(mPosterImageView, posterWidth, posterHeight);
+    }
+
+    private void setImageViewDimensionInPixels(ImageView view, int width, int height) {
+        final ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = height;
+        view.requestLayout();
+    }
+
+    private int calculatePosterHeightInPixel(int posterWidth) {
+        return (int) (posterWidth * MOVIE_POSTER_WIDTH_HEIGHT_RATIO);
+    }
+
+    private int calculatePosterWidthInPixel() {
+        final int displayWidth = getDisplayWidthInPixels();
+        return (int) (displayWidth * SCREEN_WIDTH_POSTER_WIDTH_RATIO);
+    }
+
+    private int getDisplayWidthInPixels() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.widthPixels;
     }
 }

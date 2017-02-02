@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +41,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
             final Movie movie = (Movie) intent.getParcelableExtra(INTENT_DATA);
             mTitleTextView.setText(movie.getTitle());
             mOriginalTitleTextView.setText("(" + movie.getOriginalTitle() + ")");
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            final int displayWidth = displayMetrics.widthPixels;
+            final double screenPosterRatio = 0.4;
+            final int posterWidth = (int) (displayWidth * screenPosterRatio);
+            final double moviePosterRatio = 40.0 / 27.0;
+            final int posterHeight = (int) (posterWidth * moviePosterRatio);
+            final ViewGroup.LayoutParams layoutParams = mPosterImageView.getLayoutParams();
+            layoutParams.width = posterWidth;
+            layoutParams.height = posterHeight;
+            mPosterImageView.requestLayout();
 
             final String posterLink = movie.getPosterLink();
             Picasso.with(this).load(posterLink).into(mPosterImageView);

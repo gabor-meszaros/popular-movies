@@ -16,7 +16,7 @@
         android:id="@+id/text_error_display"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="60dp"
+        android:padding="@dimen/error_textview_padding"
         android:textAlignment="center"
         android:text="@string/error_no_movies"
         android:visibility="invisible"/>

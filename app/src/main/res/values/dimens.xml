@@ -14,4 +14,7 @@
 
     <!-- Default progress bar size. I cannot find any recommendations in the Android Design guidelines. -->
     <dimen name="progress_bar_dimensions">42dp</dimen>
+
+    <!-- Error TextView padding. -->
+    <dimen name="error_textview_padding">60dp</dimen>
 </resources>

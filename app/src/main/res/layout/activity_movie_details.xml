@@ -21,13 +21,14 @@
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:textStyle="bold"
-            android:textSize="22sp"/>
+            android:textSize="@dimen/text_size_title"/>
 
         <TextView
             android:id="@+id/text_movie_original_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="14dp"
+            android:textSize="@dimen/text_size_subtitle"
             android:layout_below="@id/text_movie_title" />
 
         <ImageView
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_movie_original_title"
             android:textStyle="bold"
+            android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
         <TextView
@@ -52,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_movie_simple_title"
+            android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
         <TextView
@@ -59,14 +62,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_movie_release_date"
+            android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
         <TextView
             android:id="@+id/text_movie_synopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_normal"
             android:layout_below="@id/image_movie_poster" />
 
     </RelativeLayout>
 </ScrollView>
-

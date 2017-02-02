@@ -1,7 +1,6 @@
 package name.meszaros.gabor.popularmovies.activities;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -11,8 +10,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
+
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.R;
+import name.meszaros.gabor.popularmovies.utils.UiUtils;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -20,6 +22,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private static final double MOVIE_POSTER_WIDTH_HEIGHT_RATIO = 40.0 / 27.0;
     private static final double SCREEN_WIDTH_POSTER_WIDTH_RATIO = 0.4;
+    private static final String USER_RATING_TEXT_PREFIX = "User rating: ";
+    private static final String RELEASE_DATE_TEXT_PREFIX = "Release date: ";
 
     private TextView mTitleTextView;
     private TextView mOriginalTitleTextView;
@@ -39,16 +43,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         if (null != intent && intent.hasExtra(INTENT_DATA)) {
             final Movie movie = (Movie) intent.getParcelableExtra(INTENT_DATA);
+
             mTitleTextView.setText(movie.getTitle());
-            mOriginalTitleTextView.setText("(" + movie.getOriginalTitle() + ")");
+            mOriginalTitleTextView.setText(formatOriginalTitleText(movie.getOriginalTitle()));
 
             final String posterLink = movie.getPosterLink();
             Picasso.with(this).load(posterLink).into(mPosterImageView);
 
             mSimpleTitleTextView.setText(movie.getTitle());
-            final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY");
-            mReleaseDateTextView.setText("Release date: " + dateFormat.format(movie.getReleaseDate()));
-            mRatingTextView.setText("User rating: " + movie.getUserRating());
+            mReleaseDateTextView.setText(formatReleaseDateText(movie.getReleaseDate()));
+            mRatingTextView.setText(formatUserRatingText(movie.getUserRating()));
             mSynopsisTextView.setText(movie.getSynopsis());
         }
     }
@@ -92,5 +96,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
+    }
+
+    private static String formatOriginalTitleText(final String originalTitle) {
+        return "(" + originalTitle + ")";
+    }
+
+    private String formatReleaseDateText(final Date releaseDate) {
+        final String formattedReleaseDate = UiUtils.formatReleaseDate(releaseDate);
+        final String releaseDateTextField = RELEASE_DATE_TEXT_PREFIX + formattedReleaseDate;
+        return releaseDateTextField;
+    }
+
+    private String formatUserRatingText(final String userRating) {
+        final String userRatingText = USER_RATING_TEXT_PREFIX + userRating;
+        return userRatingText;
     }
 }

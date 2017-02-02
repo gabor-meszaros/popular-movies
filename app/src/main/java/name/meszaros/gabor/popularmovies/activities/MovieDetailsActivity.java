@@ -1,4 +1,4 @@
-package name.meszaros.gabor.popularmovies;
+package name.meszaros.gabor.popularmovies.activities;
 
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import name.meszaros.gabor.popularmovies.models.Movie;
+import name.meszaros.gabor.popularmovies.R;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 

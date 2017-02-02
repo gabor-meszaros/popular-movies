@@ -1,4 +1,4 @@
-package name.meszaros.gabor.popularmovies;
+package name.meszaros.gabor.popularmovies.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+
+import name.meszaros.gabor.popularmovies.R;
+import name.meszaros.gabor.popularmovies.models.Movie;
 
 /**
  * Adapter for providing movies for the RecyclerView.

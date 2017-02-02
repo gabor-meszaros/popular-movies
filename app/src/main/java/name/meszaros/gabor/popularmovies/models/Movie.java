@@ -1,4 +1,4 @@
-package name.meszaros.gabor.popularmovies;
+package name.meszaros.gabor.popularmovies.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

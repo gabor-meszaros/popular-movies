@@ -1,4 +1,4 @@
-package name.meszaros.gabor.popularmovies;
+package name.meszaros.gabor.popularmovies.network;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -6,6 +6,9 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
+import name.meszaros.gabor.popularmovies.BuildConfig;
+import name.meszaros.gabor.popularmovies.models.Movie;
+import name.meszaros.gabor.popularmovies.models.MovieListResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -27,7 +30,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
     private TheMovieDbService mTheMovieDbService;
 
-    interface Listener {
+    public interface Listener {
         void onFetchMoviesFinished(Movie[] movies);
     }
 

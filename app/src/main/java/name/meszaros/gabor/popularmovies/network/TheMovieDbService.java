@@ -1,5 +1,6 @@
-package name.meszaros.gabor.popularmovies;
+package name.meszaros.gabor.popularmovies.network;
 
+import name.meszaros.gabor.popularmovies.models.MovieListResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

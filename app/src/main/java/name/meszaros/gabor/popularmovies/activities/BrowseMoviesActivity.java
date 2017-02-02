@@ -1,4 +1,4 @@
-package name.meszaros.gabor.popularmovies;
+package name.meszaros.gabor.popularmovies.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import name.meszaros.gabor.popularmovies.network.FetchMoviesTask;
+import name.meszaros.gabor.popularmovies.models.Movie;
+import name.meszaros.gabor.popularmovies.adapters.MoviesAdapter;
+import name.meszaros.gabor.popularmovies.R;
 
 public class BrowseMoviesActivity extends AppCompatActivity
         implements FetchMoviesTask.Listener, MoviesAdapter.OnClickListener {

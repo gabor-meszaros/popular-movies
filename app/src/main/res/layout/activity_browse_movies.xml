@@ -4,7 +4,7 @@
     android:id="@+id/activity_browse_movies"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="name.meszaros.gabor.popularmovies.BrowseMoviesActivity">
+    tools:context="name.meszaros.gabor.popularmovies.activities.BrowseMoviesActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_movies"

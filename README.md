@@ -18,8 +18,10 @@ or [Emin Yahyayev](https://github.com/ewintory/udacity-popular-movies)'s version
 ## Coding Style
 
 There is no perfect coding guidelines except the one that everybody in
-your team follows. I follow [Futurice's Android Best Practices](https://github.com/futurice/android-best-practices)
-except that I use [CodePath's recommended directory structure](https://guides.codepath.com/android/Organizing-your-Source-Files).
+your team follows. I follow [Ribot's Android Guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+among with [CodePath's recommended directory structure](https://guides.codepath.com/android/Organizing-your-Source-Files)
+and keeping [Futurice's Android Best Practices](https://github.com/futurice/android-best-practices)
+in my mind.
 
 ## How to contribute
 

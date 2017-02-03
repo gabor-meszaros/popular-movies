@@ -30,7 +30,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
     private MoviesAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_movies);
 
@@ -53,14 +53,14 @@ public class BrowseMoviesActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_browse_movies, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         final int itemId = item.getItemId();
         switch (itemId) {
             case R.id.menu_switch_popular:
@@ -76,7 +76,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFetchMoviesFinished(Movie[] movies) {
+    public void onFetchMoviesFinished(final Movie[] movies) {
         final boolean moviesDisplayed = (0 != mAdapter.getItemCount());
         final boolean newMoviesAvailable = (null != movies);
         if (newMoviesAvailable) {
@@ -93,7 +93,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
         }
     }
 
-    private void loadMovies(int listType) {
+    private void loadMovies(final int listType) {
         showLoadProgressBar();
         final FetchMoviesTask.Listener listener = this;
         new FetchMoviesTask(listener, listType).execute();
@@ -121,7 +121,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMovieItemClick(Movie movie) {
+    public void onMovieItemClick(final Movie movie) {
         final Intent movieDetailsIntent = new Intent(this, MovieDetailsActivity.class);
         movieDetailsIntent.putExtra(MovieDetailsActivity.INTENT_DATA, movie);
         startActivity(movieDetailsIntent);

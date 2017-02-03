@@ -27,13 +27,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     private MoviesAdapter.OnClickListener mListener;
 
-    public MoviesAdapter(MoviesAdapter.OnClickListener listener) {
+    public MoviesAdapter(final MoviesAdapter.OnClickListener listener) {
         mMovies = null;
         mListener = listener;
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final Context context = parent.getContext();
 
         final LayoutInflater inflater = LayoutInflater.from(context);
@@ -49,13 +49,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return viewHolder;
     }
 
-    public void setMoviesData(Movie[] movies) {
+    public void setMoviesData(final Movie[] movies) {
         this.mMovies = movies;
         notifyDataSetChanged();
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
+    public void onBindViewHolder(final MovieViewHolder holder, final int position) {
         final Movie movie = mMovies[position];
         holder.bind(movie);
     }
@@ -75,7 +75,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         private final Context mContext;
 
-        public MovieViewHolder(Context context, View itemView) {
+        public MovieViewHolder(final Context context, final View itemView) {
             super(itemView);
 
             mContext = context;
@@ -83,13 +83,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             mMoviePoster.setOnClickListener(this);
         }
 
-        public void bind(Movie movie) {
+        public void bind(final Movie movie) {
             final String posterLinkToBind = movie.getPosterLink();
             Picasso.with(mContext).load(posterLinkToBind).into(mMoviePoster);
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(final View view) {
             if (null != mMovies) {
                 final int position = getAdapterPosition();
                 final Movie movie = mMovies[position];

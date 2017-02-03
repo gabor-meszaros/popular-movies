@@ -11,7 +11,7 @@ import java.util.Date;
 public final class UiUtils {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd MMM YYYY");
 
-    public static String formatReleaseDate(Date date) {
+    public static String formatReleaseDate(final Date date) {
         return DATE_FORMATTER.format(date);
     }
 }

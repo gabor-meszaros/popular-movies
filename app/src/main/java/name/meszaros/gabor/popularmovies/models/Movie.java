@@ -62,7 +62,7 @@ public final class Movie implements Parcelable {
      * constructor.
      */
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mTitle);
         dest.writeString(mOriginalTitle);
         dest.writeString(mSynopsis);
@@ -76,7 +76,7 @@ public final class Movie implements Parcelable {
      * Keep your eyes on the order of the statements in this constructor and in the corresponding
      * function.
      */
-    public Movie(Parcel in) {
+    public Movie(final Parcel in) {
         mTitle = in.readString();
         mOriginalTitle = in.readString();
         mSynopsis = in.readString();
@@ -99,12 +99,12 @@ public final class Movie implements Parcelable {
      */
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
-        public Movie createFromParcel(Parcel in) {
+        public Movie createFromParcel(final Parcel in) {
             return new Movie(in);
         }
 
         @Override
-        public Movie[] newArray(int size) {
+        public Movie[] newArray(final int size) {
             return new Movie[size];
         }
     };

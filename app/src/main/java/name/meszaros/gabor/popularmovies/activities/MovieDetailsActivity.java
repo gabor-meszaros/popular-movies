@@ -34,7 +34,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView mSynopsisTextView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
@@ -76,14 +76,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setImageViewDimensionInPixels(mPosterImageView, posterWidth, posterHeight);
     }
 
-    private void setImageViewDimensionInPixels(ImageView view, int width, int height) {
+    private void setImageViewDimensionInPixels(final ImageView view, final int width,
+                                               final int height) {
         final ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         view.requestLayout();
     }
 
-    private int calculatePosterHeightInPixel(int posterWidth) {
+    private int calculatePosterHeightInPixel(final int posterWidth) {
         return (int) (posterWidth * MOVIE_POSTER_WIDTH_HEIGHT_RATIO);
     }
 

@@ -34,7 +34,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
         void onFetchMoviesFinished(Movie[] movies);
     }
 
-    public FetchMoviesTask(Listener listener, int listType) {
+    public FetchMoviesTask(final Listener listener, final int listType) {
         checkListener(listener);
         checkListType(listType);
 
@@ -43,7 +43,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
         mTheMovieDbService = createTheMovieDbService();
     }
 
-    private void checkListener(Listener listener) {
+    private void checkListener(final Listener listener) {
         if (null == listener) {
             final String errorMessage = "The listener cannot be null." +
                     " It is needed for passing the result back.";
@@ -52,7 +52,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
         }
     }
 
-    private void checkListType(int listType) {
+    private void checkListType(final int listType) {
         switch (listType) {
             case LIST_POPULAR:
             case LIST_TOP_RATED:
@@ -77,7 +77,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
     }
 
     @Override
-    protected Movie[] doInBackground(Void... params) {
+    protected Movie[] doInBackground(final Void... params) {
         final Call<MovieListResponse> call = getMovieListCall(mListType);
         if (null == call) return null;
 
@@ -97,7 +97,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
     }
 
     @Override
-    protected void onPostExecute(Movie[] movies) {
+    protected void onPostExecute(final Movie[] movies) {
         if (null == mListener) {
             Log.wtf(LOG_TAG, "Nobody is listening for FetchMoviesTask result.");
         } else {
@@ -105,7 +105,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
         }
     }
 
-    private Call<MovieListResponse> getMovieListCall(int listType) {
+    private Call<MovieListResponse> getMovieListCall(final int listType) {
         final String apiKey = BuildConfig.THE_MOVIE_DB_API_KEY;
 
         Call<MovieListResponse> call = null;

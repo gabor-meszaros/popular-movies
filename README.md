@@ -1,6 +1,6 @@
 # Popular Movies
 
-**Popular Movies** is an Android app that shows you the the latest
+*Popular Movies* is an Android app that shows you the the latest
 popular movies from [The Movie DB](https://www.themoviedb.org/) website.
 
 The application is part of Udacity's [Google Associate Android Developer Fast Track](https://www.udacity.com/course/associate-android-developer-fast-track--nd818).
@@ -8,10 +8,12 @@ It's purpose is to teach the students how to build a modern Android app
 (e.g. which patterns to use, material design, how to be energy
 efficient, etc).
 
-You can find my version of the **Popular Movies** here. It is work in
+You can find my version of the *Popular Movies* here. It is work in
 progress, and it is built for education purposes only. If you need a
 more sophisticated, finalized solution, I recommend [Dmitry Malkovich](https://github.com/DmitryMalkovich/popular-movies-app)'s
 or [Emin Yahyayev](https://github.com/ewintory/udacity-popular-movies)'s version of the app.
+
+![screen](../master/art/app-screens.png)
 
 ## Coding Style
 

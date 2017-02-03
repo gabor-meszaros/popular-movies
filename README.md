@@ -15,7 +15,21 @@ or [Emin Yahyayev](https://github.com/ewintory/udacity-popular-movies)'s version
 
 ![screen](../master/art/app-screens.png)
 
-## Coding Style
+## Application secrets
+
+In order to use The Movie DB service you need to register your own API
+key (see [the documentation](https://www.themoviedb.org/documentation/api)).
+To use your own API key in *Popular Movies* you will need to add it to
+your local gradle configuration file. You can do that by adding the
+following line to your `%USERPROFILE%\.gradle\gradle.properties` file:
+
+    MyTheMovieDbApiKey="copy your api key here"
+
+Here is an example:
+
+    MyTheMovieDbApiKey="ajjs983i3JPEOIJD00384jdo203ks9732322jK"
+
+## Coding style
 
 There is no perfect coding guidelines except the one that everybody in
 your team follows. I follow [Ribot's Android Guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)

@@ -28,25 +28,25 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private static final String RELEASE_DATE_TEXT_PREFIX = "Release date: ";
 
     @BindView(R.id.text_movie_title)
-    private TextView mTitleTextView;
+    TextView mTitleTextView;
 
     @BindView(R.id.text_movie_original_title)
-    private TextView mOriginalTitleTextView;
+    TextView mOriginalTitleTextView;
 
     @BindView(R.id.image_movie_poster)
-    private ImageView mPosterImageView;
+    ImageView mPosterImageView;
 
     @BindView(R.id.text_movie_simple_title)
-    private TextView mSimpleTitleTextView;
+    TextView mSimpleTitleTextView;
 
     @BindView(R.id.text_movie_rating)
-    private TextView mRatingTextView;
+    TextView mRatingTextView;
 
     @BindView(R.id.text_movie_release_date)
-    private TextView mReleaseDateTextView;
+    TextView mReleaseDateTextView;
 
     @BindView(R.id.text_movie_synopsis)
-    private TextView mSynopsisTextView;
+    TextView mSynopsisTextView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

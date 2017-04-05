@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import name.meszaros.gabor.popularmovies.network.FetchMoviesTask;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.adapters.MoviesAdapter;
@@ -26,9 +28,15 @@ public class BrowseMoviesActivity extends AppCompatActivity
 
     private static final String SAVED_MOVIES_KEY = "saved-movies-key";
 
-    private TextView mErrorDisplayTextView;
-    private ProgressBar mLoadProgressBar;
-    private RecyclerView mMoviesRecyclerView;
+    @BindView(R.id.text_error_display)
+    TextView mErrorDisplayTextView;
+
+    @BindView(R.id.progress_bar_load_movies)
+    ProgressBar mLoadProgressBar;
+
+    @BindView(R.id.recycler_movies)
+    RecyclerView mMoviesRecyclerView;
+
     private MoviesAdapter mAdapter;
 
     @Override
@@ -36,9 +44,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_movies);
 
-        mErrorDisplayTextView = (TextView) findViewById(R.id.text_error_display);
-        mLoadProgressBar = (ProgressBar) findViewById(R.id.progress_bar_load_movies);
-        mMoviesRecyclerView = (RecyclerView) findViewById(R.id.recycler_movies);
+        ButterKnife.bind(this);
 
         final MoviesAdapter.OnClickListener listener = this;
         mAdapter = new MoviesAdapter(listener);

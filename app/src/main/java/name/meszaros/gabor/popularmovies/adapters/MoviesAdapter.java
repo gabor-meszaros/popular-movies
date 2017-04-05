@@ -49,12 +49,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return viewHolder;
     }
 
-    public void setMoviesData(final Movie[] movies) {
+    public void setMovies(final Movie[] movies) {
         this.mMovies = movies;
         notifyDataSetChanged();
     }
 
-    public Movie[] getMoviesData() {
+    public Movie[] getMovies() {
         return mMovies;
     }
 

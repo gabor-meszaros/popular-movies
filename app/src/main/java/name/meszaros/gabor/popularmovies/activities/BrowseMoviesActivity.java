@@ -56,7 +56,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
         } else {
             final Movie[] savedMovies =
                     (Movie[]) savedInstanceState.getParcelableArray(SAVED_MOVIES_KEY);
-            mAdapter.setMoviesData(savedMovies);
+            mAdapter.setMovies(savedMovies);
             showMoviesList();
         }
     }
@@ -64,7 +64,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        final Movie[] movies = mAdapter.getMoviesData();
+        final Movie[] movies = mAdapter.getMovies();
         outState.putParcelableArray(SAVED_MOVIES_KEY, movies);
     }
 
@@ -97,8 +97,8 @@ public class BrowseMoviesActivity extends AppCompatActivity
         final boolean newMoviesAvailable = (null != movies);
         if (newMoviesAvailable) {
             showMoviesList();
-            mAdapter.setMoviesData(movies);
-            // We don't need to notify the Adapter's listeners as the setMoviesData()
+            mAdapter.setMovies(movies);
+            // We don't need to notify the Adapter's listeners as the setMovies()
             // had already done that for us
         } else { // No new movies available
             if (moviesDisplayed) {

@@ -54,7 +54,8 @@ public class BrowseMoviesActivity extends AppCompatActivity
         if (null == savedInstanceState) {
             loadMovies(FetchMoviesTask.LIST_POPULAR);
         } else {
-            final Movie[] savedMovies = (Movie[])savedInstanceState.getParcelableArray(SAVED_MOVIES_KEY);
+            final Movie[] savedMovies =
+                    (Movie[]) savedInstanceState.getParcelableArray(SAVED_MOVIES_KEY);
             mAdapter.setMoviesData(savedMovies);
             showMoviesList();
         }

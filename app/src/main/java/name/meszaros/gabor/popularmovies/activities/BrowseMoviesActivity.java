@@ -24,6 +24,8 @@ public class BrowseMoviesActivity extends AppCompatActivity
 
     private static final String LOG_TAG = BrowseMoviesActivity.class.getSimpleName();
 
+    private static final String SAVED_MOVIES_KEY = "saved-movies-key";
+
     private TextView mErrorDisplayTextView;
     private ProgressBar mLoadProgressBar;
     private RecyclerView mMoviesRecyclerView;
@@ -49,7 +51,20 @@ public class BrowseMoviesActivity extends AppCompatActivity
 
         mMoviesRecyclerView.setLayoutManager(layoutManager);
 
-        loadMovies(FetchMoviesTask.LIST_POPULAR);
+        if (null == savedInstanceState) {
+            loadMovies(FetchMoviesTask.LIST_POPULAR);
+        } else {
+            final Movie[] savedMovies = (Movie[])savedInstanceState.getParcelableArray(SAVED_MOVIES_KEY);
+            mAdapter.setMoviesData(savedMovies);
+            showMoviesList();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        final Movie[] movies = mAdapter.getMoviesData();
+        outState.putParcelableArray(SAVED_MOVIES_KEY, movies);
     }
 
     @Override

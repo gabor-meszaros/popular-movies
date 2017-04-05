@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.BrowseMoviesActivity">
+        <activity
+            android:name=".activities.BrowseMoviesActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +24,7 @@
             android:parentActivityName=".activities.BrowseMoviesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.BrowseMoviesActivity"/>
+                android:value=".activities.BrowseMoviesActivity" />
         </activity>
     </application>
 

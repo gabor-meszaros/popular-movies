@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.R;
 import name.meszaros.gabor.popularmovies.utils.UiUtils;
@@ -25,12 +27,25 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private static final String USER_RATING_TEXT_PREFIX = "User rating: ";
     private static final String RELEASE_DATE_TEXT_PREFIX = "Release date: ";
 
+    @BindView(R.id.text_movie_title)
     private TextView mTitleTextView;
+
+    @BindView(R.id.text_movie_original_title)
     private TextView mOriginalTitleTextView;
+
+    @BindView(R.id.image_movie_poster)
     private ImageView mPosterImageView;
+
+    @BindView(R.id.text_movie_simple_title)
     private TextView mSimpleTitleTextView;
+
+    @BindView(R.id.text_movie_rating)
     private TextView mRatingTextView;
+
+    @BindView(R.id.text_movie_release_date)
     private TextView mReleaseDateTextView;
+
+    @BindView(R.id.text_movie_synopsis)
     private TextView mSynopsisTextView;
 
     @Override
@@ -38,7 +53,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        initializeViews();
+        ButterKnife.bind(this);
+
+        initializePosterImageView();
 
         final Intent intent = getIntent();
         if (null != intent && intent.hasExtra(EXTRA_MOVIE)) {
@@ -57,22 +74,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeViews() {
-        mTitleTextView = (TextView) findViewById(R.id.text_movie_title);
-        mOriginalTitleTextView = (TextView) findViewById(R.id.text_movie_original_title);
-        initializePosterImageView();
-        mSimpleTitleTextView = (TextView) findViewById(R.id.text_movie_simple_title);
-        mRatingTextView = (TextView) findViewById(R.id.text_movie_rating);
-        mReleaseDateTextView = (TextView) findViewById(R.id.text_movie_release_date);
-        mSynopsisTextView = (TextView) findViewById(R.id.text_movie_synopsis);
-    }
-
     private void initializePosterImageView() {
-        mPosterImageView = (ImageView) findViewById(R.id.image_movie_poster);
-
         final int posterWidth = calculatePosterWidthInPixel();
         final int posterHeight = calculatePosterHeightInPixel(posterWidth);
-
         setImageViewDimensionInPixels(mPosterImageView, posterWidth, posterHeight);
     }
 

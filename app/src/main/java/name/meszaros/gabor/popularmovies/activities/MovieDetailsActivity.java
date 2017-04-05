@@ -18,7 +18,7 @@ import name.meszaros.gabor.popularmovies.utils.UiUtils;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    public static final String INTENT_DATA = Movie.class.getName();
+    public static final String EXTRA_MOVIE = Movie.class.getName();
 
     private static final double MOVIE_POSTER_WIDTH_HEIGHT_RATIO = 40.0 / 27.0;
     private static final double SCREEN_WIDTH_POSTER_WIDTH_RATIO = 0.4;
@@ -41,8 +41,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         initializeViews();
 
         final Intent intent = getIntent();
-        if (null != intent && intent.hasExtra(INTENT_DATA)) {
-            final Movie movie = (Movie) intent.getParcelableExtra(INTENT_DATA);
+        if (null != intent && intent.hasExtra(EXTRA_MOVIE)) {
+            final Movie movie = (Movie) intent.getParcelableExtra(EXTRA_MOVIE);
 
             mTitleTextView.setText(movie.getTitle());
             mOriginalTitleTextView.setText(formatOriginalTitleText(movie.getOriginalTitle()));

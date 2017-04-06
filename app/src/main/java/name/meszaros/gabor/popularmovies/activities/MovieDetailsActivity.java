@@ -1,13 +1,16 @@
 package name.meszaros.gabor.popularmovies.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +33,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity
+        implements TrailersAdapter.OnClickListener {
+    private final static String LOG_TAG = MovieDetailsActivity.class.getSimpleName();
 
     public static final String EXTRA_MOVIE = Movie.class.getName();
 
@@ -94,7 +99,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             loadReviews(movie.getId());
 
-            mTrailersAdapter = new TrailersAdapter();
+            mTrailersAdapter = new TrailersAdapter(this);
             final RecyclerView trailersRecyclerView =
                     (RecyclerView) findViewById(R.id.recycler_trailers);
             trailersRecyclerView.setAdapter(mTrailersAdapter);
@@ -187,5 +192,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private String formatUserRatingText(final String userRating) {
         final String userRatingText = USER_RATING_TEXT_PREFIX + userRating;
         return userRatingText;
+    }
+
+    @Override
+    public void onTrailerItemClick(final Trailer trailer) {
+        final Uri trailerUri = Uri.parse(trailer.getLink());
+        final Intent viewTrailerIntent = new Intent(Intent.ACTION_VIEW, trailerUri);
+        if (null != viewTrailerIntent.resolveActivity(getPackageManager())) {
+            startActivity(viewTrailerIntent);
+        } else {
+            Log.w(LOG_TAG, "No video player app found on the device.");
+            Toast.makeText(this, "Cannot find video player app.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

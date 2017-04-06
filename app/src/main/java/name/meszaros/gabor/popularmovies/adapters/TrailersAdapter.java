@@ -2,6 +2,7 @@ package name.meszaros.gabor.popularmovies.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,19 @@ import name.meszaros.gabor.popularmovies.models.Trailer;
  * Adapter for providing trailers for the RecyclerView.
  */
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerViewHolder> {
+    private final static String LOG_TAG = TrailersAdapter.class.getSimpleName();
+
+    public interface OnClickListener {
+        void onTrailerItemClick(Trailer trailer);
+    }
 
     private Trailer[] mTrailers;
 
-    public TrailersAdapter() {
+    private TrailersAdapter.OnClickListener mListener;
+
+    public TrailersAdapter(final TrailersAdapter.OnClickListener listener) {
         mTrailers = null;
+        mListener = listener;
     }
 
     @Override
@@ -64,7 +73,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     /**
      * View holder for trailer items in the RecyclerView.
      */
-    public class TrailerViewHolder extends RecyclerView.ViewHolder {
+    public class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final Context mContext;
 
@@ -76,11 +85,23 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
             mContext = context;
             mTrailerThumbnail =
                    (ImageView) itemView.findViewById(R.id.image_trailer_thumbnail);
+            mTrailerThumbnail.setOnClickListener(this);
         }
 
         public void bind(final Trailer trailer) {
             final String thumbnailLinkToBind = trailer.getThumbnailLink();
             Picasso.with(mContext).load(thumbnailLinkToBind).into(mTrailerThumbnail);
+        }
+
+        @Override
+        public void onClick(final View view) {
+            if (null != mTrailers) {
+                final int position = getAdapterPosition();
+                final Trailer trailer = mTrailers[position];
+                mListener.onTrailerItemClick(trailer);
+            } else {
+                Log.wtf(LOG_TAG, "OnClick handler call with empty trailers list.");
+            }
         }
     }
 }

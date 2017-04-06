@@ -7,13 +7,15 @@ import com.google.gson.annotations.SerializedName;
 
 public final class Trailer implements Parcelable {
 
-    private static final String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
+    private static final String YOUTUBE_VIDEO_BASE_URL = "https://www.youtube.com/watch?v=";
+    private static final String YOUTUBE_THUMBNAIL_URL_PATTERN =
+            "https://img.youtube.com/vi/%s/mqdefault.jpg";
 
     @SerializedName("name")
     private String mName;
 
     @SerializedName("source")
-    private String mSource;
+    private String mId;
 
     @SerializedName("type")
     private String mType;
@@ -22,8 +24,12 @@ public final class Trailer implements Parcelable {
         return mName;
     }
 
-    public String getSource() {
-        return YOUTUBE_BASE_URL + mSource;
+    public String getLink() {
+        return YOUTUBE_VIDEO_BASE_URL + mId;
+    }
+
+    public String getThumbnailLink() {
+        return String.format(YOUTUBE_THUMBNAIL_URL_PATTERN, mId);
     }
 
     public String getType() {
@@ -38,7 +44,7 @@ public final class Trailer implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(mName);
-        dest.writeString(mSource);
+        dest.writeString(mId);
         dest.writeString(mType);
     }
 
@@ -49,7 +55,7 @@ public final class Trailer implements Parcelable {
      */
     public Trailer(final Parcel in) {
         mName = in.readString();
-        mSource = in.readString();
+        mId = in.readString();
         mType = in.readString();
     }
 

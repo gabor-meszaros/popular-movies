@@ -88,25 +88,29 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     (RecyclerView) findViewById(R.id.recycler_reviews);
             reviewsRecyclerView.setAdapter(mReviewsAdapter);
 
-            final Call<ReviewListResponse> call = TheMovieDbUtils.getReviewsForMovie(movie.getId());
-            call.enqueue(new Callback<ReviewListResponse>() {
-                             @Override
-                             public void onResponse(final Call<ReviewListResponse> call,
-                                                    final Response<ReviewListResponse> response) {
-                                 if (response.isSuccessful()) {
-                                     final List<Review> reviews = response.body().getReviews();
-                                     mReviewsAdapter.setReviews(reviews.toArray(new Review[0]));
-                                 }
-                             }
+            loadReviews(movie.getId());
+        }
+    }
 
-                             @Override
-                             public void onFailure(final Call<ReviewListResponse> call,
-                                                   final Throwable t) {
-
+    private void loadReviews(final String movieId) {
+        final Call<ReviewListResponse> call = TheMovieDbUtils.getReviewsForMovie(movieId);
+        call.enqueue(new Callback<ReviewListResponse>() {
+                         @Override
+                         public void onResponse(final Call<ReviewListResponse> call,
+                                                final Response<ReviewListResponse> response) {
+                             if (response.isSuccessful()) {
+                                 final List<Review> reviews = response.body().getReviews();
+                                 mReviewsAdapter.setReviews(reviews.toArray(new Review[0]));
                              }
                          }
-            );
-        }
+
+                         @Override
+                         public void onFailure(final Call<ReviewListResponse> call,
+                                               final Throwable t) {
+
+                         }
+                     }
+        );
     }
 
     private void initializePosterImageView() {

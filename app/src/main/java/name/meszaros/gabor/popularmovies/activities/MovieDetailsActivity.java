@@ -16,19 +16,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import name.meszaros.gabor.popularmovies.BuildConfig;
 import name.meszaros.gabor.popularmovies.adapters.ReviewsAdapter;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.R;
 import name.meszaros.gabor.popularmovies.models.Review;
 import name.meszaros.gabor.popularmovies.models.ReviewListResponse;
-import name.meszaros.gabor.popularmovies.network.TheMovieDbService;
+import name.meszaros.gabor.popularmovies.utils.TheMovieDbUtils;
 import name.meszaros.gabor.popularmovies.utils.UiUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -87,16 +84,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
             final RecyclerView reviewsRecyclerView =
                     (RecyclerView) findViewById(R.id.recycler_reviews);
             final ReviewsAdapter adapter = new ReviewsAdapter();
+
             reviewsRecyclerView.setAdapter(adapter);
-            final Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(TheMovieDbService.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            final Class<TheMovieDbService> theMovieDbServiceDefinition = TheMovieDbService.class;
-            final TheMovieDbService theMovieDbService = retrofit.create(theMovieDbServiceDefinition);
-            final String apiKey = BuildConfig.THE_MOVIE_DB_API_KEY;
-            final Call<ReviewListResponse> call =
-                    theMovieDbService.getReviewsForMovie(movie.getId(), apiKey);
+
+            final Call<ReviewListResponse> call = TheMovieDbUtils.getReviewsForMovie(movie.getId());
             call.enqueue(new Callback<ReviewListResponse>() {
                              @Override
                              public void onResponse(final Call<ReviewListResponse> call,

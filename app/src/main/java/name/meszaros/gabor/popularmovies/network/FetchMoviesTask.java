@@ -6,13 +6,11 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
-import name.meszaros.gabor.popularmovies.BuildConfig;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.models.MovieListResponse;
+import name.meszaros.gabor.popularmovies.utils.TheMovieDbUtils;
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Background task to fetch movies from The Movie DB service.
@@ -28,8 +26,6 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
     private int mListType;
 
-    private TheMovieDbService mTheMovieDbService;
-
     public interface Listener {
         void onFetchMoviesFinished(Movie[] movies);
     }
@@ -40,7 +36,6 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
 
         mListener = listener;
         mListType = listType;
-        mTheMovieDbService = createTheMovieDbService();
     }
 
     private void checkListener(final Listener listener) {
@@ -63,17 +58,6 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
                 Log.e(LOG_TAG, errorMessage);
                 throw new IllegalArgumentException(errorMessage);
         }
-    }
-
-    private TheMovieDbService createTheMovieDbService() {
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(TheMovieDbService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final Class<TheMovieDbService> theMovieDbServiceDefinition = TheMovieDbService.class;
-
-        return retrofit.create(theMovieDbServiceDefinition);
     }
 
     @Override
@@ -106,15 +90,13 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
     }
 
     private Call<MovieListResponse> getMovieListCall(final int listType) {
-        final String apiKey = BuildConfig.THE_MOVIE_DB_API_KEY;
-
         Call<MovieListResponse> call = null;
         switch (listType) {
             case LIST_POPULAR:
-                call = mTheMovieDbService.getPopularMovies(apiKey);
+                call = TheMovieDbUtils.getPopularMovies();
                 break;
             case LIST_TOP_RATED:
-                call =  mTheMovieDbService.getTopRatedMovies(apiKey);
+                call = TheMovieDbUtils.getTopRatedMovies();
                 break;
             default:
                 Log.wtf(LOG_TAG, "Unknown list type for FetchMoviesTask. List type: " + listType);

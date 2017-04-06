@@ -14,6 +14,9 @@ public final class Movie implements Parcelable {
 
     private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185/";
 
+    @SerializedName("id")
+    private String mId;
+
     @SerializedName("title")
     private String mTitle;
 
@@ -31,6 +34,10 @@ public final class Movie implements Parcelable {
 
     @SerializedName("poster_path")
     private String mPosterPath;
+
+    public String getId() {
+        return mId;
+    }
 
     public String getTitle() {
         return mTitle;
@@ -63,6 +70,7 @@ public final class Movie implements Parcelable {
      */
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeString(mId);
         dest.writeString(mTitle);
         dest.writeString(mOriginalTitle);
         dest.writeString(mSynopsis);
@@ -77,6 +85,7 @@ public final class Movie implements Parcelable {
      * function.
      */
     public Movie(final Parcel in) {
+        mId = in.readString();
         mTitle = in.readString();
         mOriginalTitle = in.readString();
         mSynopsis = in.readString();

@@ -17,10 +17,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import name.meszaros.gabor.popularmovies.adapters.ReviewsAdapter;
+import name.meszaros.gabor.popularmovies.adapters.TrailersAdapter;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.R;
 import name.meszaros.gabor.popularmovies.models.Review;
 import name.meszaros.gabor.popularmovies.models.ReviewListResponse;
+import name.meszaros.gabor.popularmovies.models.Trailer;
+import name.meszaros.gabor.popularmovies.models.TrailerListResponse;
 import name.meszaros.gabor.popularmovies.utils.TheMovieDbUtils;
 import name.meszaros.gabor.popularmovies.utils.UiUtils;
 import retrofit2.Call;
@@ -58,6 +61,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView mSynopsisTextView;
 
     private ReviewsAdapter mReviewsAdapter;
+    private TrailersAdapter mTrailersAdapter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -89,6 +93,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
             reviewsRecyclerView.setAdapter(mReviewsAdapter);
 
             loadReviews(movie.getId());
+
+            mTrailersAdapter = new TrailersAdapter();
+            final RecyclerView trailersRecyclerView =
+                    (RecyclerView) findViewById(R.id.recycler_trailers);
+            trailersRecyclerView.setAdapter(mTrailersAdapter);
+
+            loadTrailers(movie.getId());
         }
     }
 
@@ -106,6 +117,27 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                          @Override
                          public void onFailure(final Call<ReviewListResponse> call,
+                                               final Throwable t) {
+
+                         }
+                     }
+        );
+    }
+
+    private void loadTrailers(final String movieId) {
+        final Call<TrailerListResponse> call = TheMovieDbUtils.getTrailersForMovie(movieId);
+        call.enqueue(new Callback<TrailerListResponse>() {
+                         @Override
+                         public void onResponse(final Call<TrailerListResponse> call,
+                                                final Response<TrailerListResponse> response) {
+                             if (response.isSuccessful()) {
+                                 final List<Trailer> trailers = response.body().getTrailers();
+                                 mTrailersAdapter.setTrailers(trailers.toArray(new Trailer[0]));
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(final Call<TrailerListResponse> call,
                                                final Throwable t) {
 
                          }

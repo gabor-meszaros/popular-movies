@@ -76,6 +76,25 @@
             android:layout_below="@id/image_movie_poster" />
 
         <TextView
+            android:id="@+id/text_trailers_label"
+            android:text="Trailers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/text_size_normal"
+            android:paddingBottom="@dimen/text_size_normal"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textStyle="bold"
+            android:layout_below="@id/text_movie_synopsis" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_below="@id/text_trailers_label" />
+
+        <TextView
             android:id="@+id/text_review_label"
             android:text="Reviews"
             android:layout_width="wrap_content"
@@ -83,7 +102,7 @@
             android:paddingTop="@dimen/text_size_normal"
             android:textSize="@dimen/text_size_subtitle"
             android:textStyle="bold"
-            android:layout_below="@id/text_movie_synopsis" />
+            android:layout_below="@id/recycler_trailers" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_reviews"

@@ -57,6 +57,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @BindView(R.id.text_movie_synopsis)
     TextView mSynopsisTextView;
 
+    private ReviewsAdapter mReviewsAdapter;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +83,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
             mRatingTextView.setText(formatUserRatingText(movie.getUserRating()));
             mSynopsisTextView.setText(movie.getSynopsis());
 
+            mReviewsAdapter = new ReviewsAdapter();
             final RecyclerView reviewsRecyclerView =
                     (RecyclerView) findViewById(R.id.recycler_reviews);
-            final ReviewsAdapter adapter = new ReviewsAdapter();
-
-            reviewsRecyclerView.setAdapter(adapter);
+            reviewsRecyclerView.setAdapter(mReviewsAdapter);
 
             final Call<ReviewListResponse> call = TheMovieDbUtils.getReviewsForMovie(movie.getId());
             call.enqueue(new Callback<ReviewListResponse>() {
@@ -94,7 +95,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                                                     final Response<ReviewListResponse> response) {
                                  if (response.isSuccessful()) {
                                      final List<Review> reviews = response.body().getReviews();
-                                     adapter.setReviews(reviews.toArray(new Review[0]));
+                                     mReviewsAdapter.setReviews(reviews.toArray(new Review[0]));
                                  }
                              }
 

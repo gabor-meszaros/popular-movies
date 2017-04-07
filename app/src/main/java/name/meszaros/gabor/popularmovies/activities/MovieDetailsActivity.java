@@ -65,6 +65,12 @@ public class MovieDetailsActivity extends AppCompatActivity
     @BindView(R.id.text_movie_synopsis)
     TextView mSynopsisTextView;
 
+    @BindView(R.id.recycler_trailers)
+    RecyclerView mTrailersRecyclerView;
+
+    @BindView(R.id.recycler_reviews)
+    RecyclerView mReviewsRecyclerView;
+
     private ReviewsAdapter mReviewsAdapter;
     private TrailersAdapter mTrailersAdapter;
 
@@ -92,19 +98,15 @@ public class MovieDetailsActivity extends AppCompatActivity
             mRatingTextView.setText(formatUserRatingText(movie.getUserRating()));
             mSynopsisTextView.setText(movie.getSynopsis());
 
-            mReviewsAdapter = new ReviewsAdapter();
-            final RecyclerView reviewsRecyclerView =
-                    (RecyclerView) findViewById(R.id.recycler_reviews);
-            reviewsRecyclerView.setAdapter(mReviewsAdapter);
+            final String movieId = movie.getId();
 
-            loadReviews(movie.getId());
+            mReviewsAdapter = new ReviewsAdapter();
+            mReviewsRecyclerView.setAdapter(mReviewsAdapter);
+            loadReviews(movieId);
 
             mTrailersAdapter = new TrailersAdapter(this);
-            final RecyclerView trailersRecyclerView =
-                    (RecyclerView) findViewById(R.id.recycler_trailers);
-            trailersRecyclerView.setAdapter(mTrailersAdapter);
-
-            loadTrailers(movie.getId());
+            mTrailersRecyclerView.setAdapter(mTrailersAdapter);
+            loadTrailers(movieId);
         }
     }
 

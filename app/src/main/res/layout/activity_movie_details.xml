@@ -67,6 +67,17 @@
             android:textSize="@dimen/text_size_normal"
             android:layout_toRightOf="@id/image_movie_poster" />
 
+        <Button
+            android:id="@+id/button_favorite"
+            tools:text="Favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickFavoritesButton"
+            android:layout_marginTop="@dimen/text_size_normal"
+            android:paddingLeft="@dimen/column_space_size"
+            android:layout_below="@id/text_movie_rating"
+            android:layout_toRightOf="@id/image_movie_poster" />
+
         <TextView
             android:id="@+id/text_movie_synopsis"
             android:layout_width="match_parent"

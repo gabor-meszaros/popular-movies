@@ -7,4 +7,8 @@
     <!-- Browse Movies Menu -->
     <string name="action_switch_popular">Most Popular</string>
     <string name="action_switch_highest_rated">Highest Rated</string>
+
+    <!-- Browse Movies Activity -->
+    <string name="button_add_to_favorites">Add To Favorites</string>
+    <string name="button_remove_from_favorites">Remove From Favorites</string>
 </resources>

@@ -1,13 +1,17 @@
 package name.meszaros.gabor.popularmovies.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import name.meszaros.gabor.popularmovies.adapters.ReviewsAdapter;
 import name.meszaros.gabor.popularmovies.adapters.TrailersAdapter;
+import name.meszaros.gabor.popularmovies.data.MoviesContract;
+import name.meszaros.gabor.popularmovies.data.MoviesContract.MovieEntry;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.R;
 import name.meszaros.gabor.popularmovies.models.Review;
@@ -61,6 +67,9 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     @BindView(R.id.text_movie_release_date)
     TextView mReleaseDateTextView;
+
+    @BindView(R.id.button_favorite)
+    Button mFavoriteButton;
 
     @BindView(R.id.text_movie_synopsis)
     TextView mSynopsisTextView;
@@ -107,7 +116,22 @@ public class MovieDetailsActivity extends AppCompatActivity
             mTrailersAdapter = new TrailersAdapter(this);
             mTrailersRecyclerView.setAdapter(mTrailersAdapter);
             loadTrailers(movieId);
+
+            if (isFavoriteMovie(movieId)) {
+                mFavoriteButton.setText(getString(R.string.button_remove_from_favorites));
+            } else {
+                mFavoriteButton.setText(getString(R.string.button_add_to_favorites));
+            }
         }
+    }
+
+    private boolean isFavoriteMovie(final String movieId) {
+        final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI,
+                new String[]{MovieEntry.COLUMN_ID},
+                MovieEntry.COLUMN_ID + "=?",
+                new String[]{movieId},
+                null);
+        return null != cursor && cursor.getCount() != 0;
     }
 
     private void loadReviews(final String movieId) {
@@ -183,6 +207,30 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     private static String formatOriginalTitleText(final String originalTitle) {
         return "(" + originalTitle + ")";
+    }
+
+    public void onClickFavoritesButton(final View view) {
+        final Button favoritesButton = (Button) view;
+        final String favoritesButtonText = favoritesButton.getText().toString();
+        final Intent intent = getIntent();
+        final Movie movie = (Movie) intent.getParcelableExtra(EXTRA_MOVIE);
+        if (favoritesButtonText.equals(getString(R.string.button_add_to_favorites))) {
+            final ContentValues values = new ContentValues();
+            values.put(MovieEntry.COLUMN_ID, movie.getId());
+            values.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
+            values.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
+            values.put(MovieEntry.COLUMN_SYNOPSIS, movie.getSynopsis());
+            values.put(MovieEntry.COLUMN_USER_RATING, movie.getUserRating());
+            final String releaseDate = String.valueOf(movie.getReleaseDate().getTime());
+            values.put(MovieEntry.COLUMN_RELEASE_DATE, releaseDate);
+            values.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+            getContentResolver().insert(MovieEntry.CONTENT_URI, values);
+            favoritesButton.setText(getString(R.string.button_remove_from_favorites));
+        } else {
+            getContentResolver().delete(MovieEntry.CONTENT_URI, MovieEntry.COLUMN_ID + "=?",
+                    new String[]{movie.getId()});
+            favoritesButton.setText(getString(R.string.button_add_to_favorites));
+        }
     }
 
     private String formatReleaseDateText(final Date releaseDate) {

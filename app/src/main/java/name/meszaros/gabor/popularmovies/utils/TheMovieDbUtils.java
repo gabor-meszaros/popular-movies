@@ -1,5 +1,7 @@
 package name.meszaros.gabor.popularmovies.utils;
 
+import android.net.Uri;
+
 import name.meszaros.gabor.popularmovies.BuildConfig;
 import name.meszaros.gabor.popularmovies.models.MovieListResponse;
 import name.meszaros.gabor.popularmovies.models.ReviewListResponse;
@@ -10,6 +12,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TheMovieDbUtils {
+
+    private static final String POSTER_PATH_BASE_URL = "http://image.tmdb.org/t/p/w185/";
+
+    public static String getAbsolutePosterPath(final String relativePosterPath) {
+        final Uri posterUri = Uri.parse(POSTER_PATH_BASE_URL).buildUpon()
+                .appendEncodedPath(relativePosterPath)
+                .build();
+        return posterUri.toString();
+    }
 
     public static String getApiKey() {
         return BuildConfig.THE_MOVIE_DB_API_KEY;

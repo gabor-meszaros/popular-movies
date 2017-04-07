@@ -70,6 +70,15 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, Movie[]> {
             if (response.isSuccessful()) {
                 final List<Movie> movies = response.body().getMovies();
 
+                // Poster path is relative. It is more readable to make it absolute this way than
+                // creating a custom parser for Retrofit.
+                for (Movie movie : movies) {
+                    final String relativePosterPath = movie.getPosterPath();
+                    final String absolutePosterPath =
+                            TheMovieDbUtils.getAbsolutePosterPath(relativePosterPath);
+                    movie.setPosterPath(absolutePosterPath);
+                }
+
                 return movies.toArray(new Movie[0]);
             }
         } catch (IOException e) {

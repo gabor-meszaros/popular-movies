@@ -90,8 +90,8 @@ public class MovieDetailsActivity extends AppCompatActivity
             mTitleTextView.setText(movie.getTitle());
             mOriginalTitleTextView.setText(formatOriginalTitleText(movie.getOriginalTitle()));
 
-            final String posterLink = movie.getPosterLink();
-            Picasso.with(this).load(posterLink).into(mPosterImageView);
+            final String posterPath = movie.getPosterPath();
+            Picasso.with(this).load(posterPath).into(mPosterImageView);
 
             mSimpleTitleTextView.setText(movie.getTitle());
             mReleaseDateTextView.setText(formatReleaseDateText(movie.getReleaseDate()));

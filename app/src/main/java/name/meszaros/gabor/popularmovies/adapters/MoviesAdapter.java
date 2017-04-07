@@ -88,8 +88,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         }
 
         public void bind(final Movie movie) {
-            final String posterLinkToBind = movie.getPosterLink();
-            Picasso.with(mContext).load(posterLinkToBind).into(mMoviePoster);
+            final String posterPathToBind = movie.getPosterPath();
+            Picasso.with(mContext).load(posterPathToBind).into(mMoviePoster);
         }
 
         @Override

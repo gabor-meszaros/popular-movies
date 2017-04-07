@@ -12,8 +12,6 @@ import java.util.Date;
  */
 public final class Movie implements Parcelable {
 
-    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185/";
-
     @SerializedName("id")
     private String mId;
 
@@ -39,28 +37,56 @@ public final class Movie implements Parcelable {
         return mId;
     }
 
+    public void setId(final String id) {
+        this.mId = id;
+    }
+
     public String getTitle() {
         return mTitle;
+    }
+
+    public void setTitle(final String title) {
+        this.mTitle = title;
     }
 
     public String getOriginalTitle() {
         return mOriginalTitle;
     }
 
+    public void setOriginalTitle(final String originalTitle) {
+        this.mOriginalTitle = originalTitle;
+    }
+
     public String getSynopsis() {
         return mSynopsis;
+    }
+
+    public void setSynopsis(final String synopsis) {
+        this.mSynopsis = synopsis;
     }
 
     public String getUserRating() {
         return mUserRating;
     }
 
+    public void setUserRating(final String userRating) {
+        this.mUserRating = userRating;
+    }
+
     public Date getReleaseDate() {
         return mReleaseDate;
     }
 
-    public String getPosterLink() {
-        return IMAGE_BASE_URL + mPosterPath;
+    public void setReleaseDate(final Date releaseDate) {
+        this.mReleaseDate = releaseDate;
+    }
+
+    public String getPosterPath() {
+        return mPosterPath;
+    }
+
+    public void setPosterPath(final String posterPath) {
+        this.mPosterPath = posterPath;
     }
 
     /**

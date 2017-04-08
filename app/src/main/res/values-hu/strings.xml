@@ -1,0 +1,22 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Popular Movies</string>
+
+    <!-- Browse Movies Activity -->
+    <string name="error_no_internet" translatable="true">Nem tudok filmeket letölteni. Kérlek próbáld meg később.</string>
+    <string name="error_no_movies" translatable="true">Ebben a kategóriában még nincsenek filmek.</string>
+
+    <!-- Browse Movies Menu -->
+    <string name="action_switch_popular" translatable="true">Legkedveltebbek</string>
+    <string name="action_switch_highest_rated" translatable="true">Legtöbb pontszám</string>
+    <string name="action_switch_favorites" translatable="true">Kedvencek</string>
+
+    <!-- Movie Details Activity -->
+    <string name="label_trailers" translatable="true">Bemutatók</string>
+    <string name="label_reviews" translatable="true">Értékelések</string>
+    <string name="label_original_title" translatable="true">(<xliff:g id="title" example="Fight Club">%s</xliff:g>)</string>
+    <string name="label_user_rating" translatable="true">Értékelés: <xliff:g id="rating" example="2">%s</xliff:g></string>
+    <string name="label_release_date" translatable="true">Megjelenés: <xliff:g id="date" example="Jan 3, 2011">%s</xliff:g></string>
+    <string name="button_add_to_favorites" translatable="true">Hozzáadás a kedvencekhez</string>
+    <string name="button_remove_from_favorites" translatable="true">Törlés a kedvencekből</string>
+    <string name="error_no_video_player" translatable="true">Nem található videó lejátszó app.</string>
+</resources>

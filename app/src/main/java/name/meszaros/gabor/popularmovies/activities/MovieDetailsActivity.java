@@ -25,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import name.meszaros.gabor.popularmovies.adapters.ReviewsAdapter;
 import name.meszaros.gabor.popularmovies.adapters.TrailersAdapter;
-import name.meszaros.gabor.popularmovies.data.MoviesContract;
 import name.meszaros.gabor.popularmovies.data.MoviesContract.MovieEntry;
 import name.meszaros.gabor.popularmovies.models.Movie;
 import name.meszaros.gabor.popularmovies.R;

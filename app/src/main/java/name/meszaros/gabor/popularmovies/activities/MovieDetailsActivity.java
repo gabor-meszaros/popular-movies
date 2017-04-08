@@ -133,7 +133,12 @@ public class MovieDetailsActivity extends AppCompatActivity
                 MovieEntry.COLUMN_ID + "=?",
                 new String[]{movieId},
                 null);
-        return null != cursor && cursor.getCount() != 0;
+
+        final boolean favoriteMovie = (null != cursor && cursor.getCount() != 0);
+
+        if (null != cursor) cursor.close();
+
+        return favoriteMovie;
     }
 
     private void loadReviews(final String movieId) {

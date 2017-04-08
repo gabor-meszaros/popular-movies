@@ -3,6 +3,9 @@ package name.meszaros.gabor.popularmovies.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,11 +27,15 @@ import name.meszaros.gabor.popularmovies.adapters.MoviesAdapter;
 import name.meszaros.gabor.popularmovies.R;
 
 public class BrowseMoviesActivity extends AppCompatActivity
-        implements FetchMoviesTask.Listener, MoviesAdapter.OnClickListener {
+        implements FetchMoviesTask.Listener, MoviesAdapter.OnClickListener,
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = BrowseMoviesActivity.class.getSimpleName();
 
     private static final String SAVED_MOVIES_KEY = "saved-movies-key";
+    private static final String SAVED_SELECTED_MOVIE_LIST_KEY = "saved-selected-movie-list-key";
+
+    private static final int ID_LOADER_FAVORITE_MOVIES = 1;
 
     @BindView(R.id.text_error_display)
     TextView mErrorDisplayTextView;
@@ -40,6 +47,8 @@ public class BrowseMoviesActivity extends AppCompatActivity
     RecyclerView mMoviesRecyclerView;
 
     private MoviesAdapter mAdapter;
+
+    private int mSelectedMovieList;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -65,8 +74,11 @@ public class BrowseMoviesActivity extends AppCompatActivity
             final Movie[] savedMovies =
                     (Movie[]) savedInstanceState.getParcelableArray(SAVED_MOVIES_KEY);
             mAdapter.setMovies(savedMovies);
+            mSelectedMovieList = savedInstanceState.getInt(SAVED_SELECTED_MOVIE_LIST_KEY);
             showMoviesList();
         }
+
+        getSupportLoaderManager().initLoader(ID_LOADER_FAVORITE_MOVIES, null, this);
     }
 
     @Override
@@ -74,6 +86,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         final Movie[] movies = mAdapter.getMovies();
         outState.putParcelableArray(SAVED_MOVIES_KEY, movies);
+        outState.putInt(SAVED_SELECTED_MOVIE_LIST_KEY, mSelectedMovieList);
     }
 
     @Override
@@ -88,12 +101,15 @@ public class BrowseMoviesActivity extends AppCompatActivity
         final int itemId = item.getItemId();
         switch (itemId) {
             case R.id.menu_switch_popular:
+                mSelectedMovieList = itemId;
                 loadMovies(FetchMoviesTask.LIST_POPULAR);
                 break;
             case R.id.menu_switch_highest_rated:
+                mSelectedMovieList = itemId;
                 loadMovies(FetchMoviesTask.LIST_TOP_RATED);
                 break;
             case R.id.menu_switch_favorites:
+                mSelectedMovieList = itemId;
                 loadFavoriteMovies();
                 break;
             default:
@@ -160,5 +176,40 @@ public class BrowseMoviesActivity extends AppCompatActivity
         final Intent movieDetailsIntent = new Intent(this, MovieDetailsActivity.class);
         movieDetailsIntent.putExtra(MovieDetailsActivity.EXTRA_MOVIE, movie);
         startActivity(movieDetailsIntent);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case ID_LOADER_FAVORITE_MOVIES:
+                try {
+                    return new CursorLoader(this,
+                            MovieEntry.CONTENT_URI,
+                            null,
+                            null,
+                            null,
+                            null);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "Failed to asynchronously load data.");
+                    e.printStackTrace();
+                    return null;
+                }
+            default:
+                throw new RuntimeException("Loader not implemented: " + id);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (R.id.menu_switch_favorites == mSelectedMovieList) {
+            mAdapter.setMovies(data);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        if (R.id.menu_switch_favorites == mSelectedMovieList) {
+            mAdapter.setMovies((Cursor) null);
+        }
     }
 }

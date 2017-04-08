@@ -6,7 +6,7 @@
     <!-- Default text sizes -->
     <dimen name="text_size_title">22sp</dimen>
     <dimen name="text_size_subtitle">18sp</dimen>
-    <dimen name="text_size_normal">14dp</dimen>
+    <dimen name="text_size_normal">14sp</dimen>
 
     <!-- Column space size -->
     <!-- It needs to be used as a padding of the right side of the left element and the left side

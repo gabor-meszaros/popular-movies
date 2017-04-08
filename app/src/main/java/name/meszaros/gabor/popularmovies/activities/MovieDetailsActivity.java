@@ -97,7 +97,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
         final Intent intent = getIntent();
         if (null != intent && intent.hasExtra(EXTRA_MOVIE)) {
-            final Movie movie = (Movie) intent.getParcelableExtra(EXTRA_MOVIE);
+            final Movie movie = intent.getParcelableExtra(EXTRA_MOVIE);
 
             mTitleTextView.setText(movie.getTitle());
             mOriginalTitleTextView.setText(getString(R.string.label_original_title,
@@ -225,9 +225,10 @@ public class MovieDetailsActivity extends AppCompatActivity
         final Button favoritesButton = (Button) view;
         final String favoritesButtonText = favoritesButton.getText().toString();
         final Intent intent = getIntent();
-        final Movie movie = (Movie) intent.getParcelableExtra(EXTRA_MOVIE);
+        final Movie movie = intent.getParcelableExtra(EXTRA_MOVIE);
         if (favoritesButtonText.equals(getString(R.string.button_add_to_favorites))) {
             final ContentValues values = new ContentValues();
+
             values.put(MovieEntry.COLUMN_ID, movie.getId());
             values.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
             values.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
@@ -236,7 +237,9 @@ public class MovieDetailsActivity extends AppCompatActivity
             final String releaseDate = String.valueOf(movie.getReleaseDate().getTime());
             values.put(MovieEntry.COLUMN_RELEASE_DATE, releaseDate);
             values.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+
             getContentResolver().insert(MovieEntry.CONTENT_URI, values);
+
             favoritesButton.setText(getString(R.string.button_remove_from_favorites));
         } else {
             getContentResolver().delete(MovieEntry.CONTENT_URI, MovieEntry.COLUMN_ID + "=?",

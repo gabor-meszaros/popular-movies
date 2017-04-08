@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/error_textview_padding"
         android:textAlignment="center"
-        android:text="@string/error_no_movies"
+        android:text="@string/error_no_internet"
         android:visibility="invisible"/>
 
     <ProgressBar

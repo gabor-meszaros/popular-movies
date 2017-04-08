@@ -122,8 +122,12 @@ public class BrowseMoviesActivity extends AppCompatActivity
         showLoadProgressBar();
         final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI, null, null, null,
                 null);
-        mAdapter.setMovies(cursor);
-        showMoviesList();
+        if (null != cursor && cursor.getCount() != 0) {
+            mAdapter.setMovies(cursor);
+            showMoviesList();
+        } else {
+            showErrorDisplay(R.string.error_no_movies);
+        }
     }
 
     @Override
@@ -139,7 +143,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
             if (moviesDisplayed) {
                 Log.w(LOG_TAG, "No new data available to refresh movies list. Kept old movies.");
             } else { // There are no movies in our RecyclerView
-                showErrorDisplay();
+                showErrorDisplay(R.string.error_no_internet);
             }
         }
     }
@@ -150,10 +154,12 @@ public class BrowseMoviesActivity extends AppCompatActivity
         new FetchMoviesTask(listener, listType).execute();
     }
 
-    private void showErrorDisplay() {
+    private void showErrorDisplay(final int messageStringResourceId) {
         mLoadProgressBar.setVisibility(View.INVISIBLE);
         mMoviesRecyclerView.setVisibility(View.INVISIBLE);
 
+        final String message = getString(messageStringResourceId);
+        mErrorDisplayTextView.setText(message);
         mErrorDisplayTextView.setVisibility(View.VISIBLE);
     }
 

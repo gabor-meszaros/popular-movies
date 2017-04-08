@@ -94,17 +94,20 @@ public class BrowseMoviesActivity extends AppCompatActivity
                 loadMovies(FetchMoviesTask.LIST_TOP_RATED);
                 break;
             case R.id.menu_switch_favorites:
-                final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI,
-                        null,
-                        null,
-                        null,
-                        null);
-                mAdapter.setMovies(cursor);
+                loadFavoriteMovies();
                 break;
             default:
                 Log.w(LOG_TAG, "Menu selection is not handled. ItemId: " + itemId);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadFavoriteMovies() {
+        showLoadProgressBar();
+        final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI, null, null, null,
+                null);
+        mAdapter.setMovies(cursor);
+        showMoviesList();
     }
 
     @Override

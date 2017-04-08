@@ -33,6 +33,10 @@ public final class Movie implements Parcelable {
     @SerializedName("poster_path")
     private String mPosterPath;
 
+    public Movie() {
+        this.mReleaseDate = null;
+    }
+
     public String getId() {
         return mId;
     }

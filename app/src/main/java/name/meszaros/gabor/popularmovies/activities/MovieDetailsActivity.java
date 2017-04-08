@@ -47,6 +47,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     private static final double MOVIE_POSTER_WIDTH_HEIGHT_RATIO = 40.0 / 27.0;
     private static final double SCREEN_WIDTH_POSTER_WIDTH_RATIO = 0.4;
+
     private static final String USER_RATING_TEXT_PREFIX = "User rating: ";
     private static final String RELEASE_DATE_TEXT_PREFIX = "Release date: ";
 
@@ -97,14 +98,15 @@ public class MovieDetailsActivity extends AppCompatActivity
             final Movie movie = (Movie) intent.getParcelableExtra(EXTRA_MOVIE);
 
             mTitleTextView.setText(movie.getTitle());
-            mOriginalTitleTextView.setText(formatOriginalTitleText(movie.getOriginalTitle()));
+            mOriginalTitleTextView.setText(getString(R.string.label_original_title,
+                    movie.getOriginalTitle()));
 
             final String posterPath = movie.getPosterPath();
             Picasso.with(this).load(posterPath).into(mPosterImageView);
 
             mSimpleTitleTextView.setText(movie.getTitle());
             mReleaseDateTextView.setText(formatReleaseDateText(movie.getReleaseDate()));
-            mRatingTextView.setText(formatUserRatingText(movie.getUserRating()));
+            mRatingTextView.setText(getString(R.string.label_user_rating, movie.getUserRating()));
             mSynopsisTextView.setText(movie.getSynopsis());
 
             final String movieId = movie.getId();
@@ -205,10 +207,6 @@ public class MovieDetailsActivity extends AppCompatActivity
         return displayMetrics.widthPixels;
     }
 
-    private static String formatOriginalTitleText(final String originalTitle) {
-        return "(" + originalTitle + ")";
-    }
-
     public void onClickFavoritesButton(final View view) {
         final Button favoritesButton = (Button) view;
         final String favoritesButtonText = favoritesButton.getText().toString();
@@ -235,13 +233,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     private String formatReleaseDateText(final Date releaseDate) {
         final String formattedReleaseDate = UiUtils.formatReleaseDate(releaseDate);
-        final String releaseDateTextField = RELEASE_DATE_TEXT_PREFIX + formattedReleaseDate;
-        return releaseDateTextField;
-    }
-
-    private String formatUserRatingText(final String userRating) {
-        final String userRatingText = USER_RATING_TEXT_PREFIX + userRating;
-        return userRatingText;
+        return getString(R.string.label_release_date, formattedReleaseDate);
     }
 
     @Override
@@ -252,7 +244,8 @@ public class MovieDetailsActivity extends AppCompatActivity
             startActivity(viewTrailerIntent);
         } else {
             Log.w(LOG_TAG, "No video player app found on the device.");
-            Toast.makeText(this, "Cannot find video player app.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_no_video_player), Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 }

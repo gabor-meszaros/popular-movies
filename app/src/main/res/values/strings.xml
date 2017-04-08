@@ -11,6 +11,8 @@
     <string name="action_switch_favorites">Favorites</string>
 
     <!-- Movie Details Activity -->
+    <string name="label_trailers">Trailers</string>
+    <string name="label_reviews">Reviews</string>
     <string name="button_add_to_favorites">Add To Favorites</string>
     <string name="button_remove_from_favorites">Remove From Favorites</string>
 </resources>

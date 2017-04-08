@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/activity_movie_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/text_movie_title"
@@ -88,7 +88,7 @@
 
         <TextView
             android:id="@+id/text_trailers_label"
-            android:text="Trailers"
+            android:text="@string/label_trailers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/text_size_normal"
@@ -107,7 +107,7 @@
 
         <TextView
             android:id="@+id/text_review_label"
-            android:text="Reviews"
+            android:text="@string/label_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/text_size_normal"

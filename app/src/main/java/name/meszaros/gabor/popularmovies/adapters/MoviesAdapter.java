@@ -59,15 +59,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
     public void setMovies(final Cursor cursor) {
-        if (null != cursor && cursor.getCount() != 0) {
-            final Movie[] movies = new Movie[cursor.getCount()];
+        Movie[] movies = null;
+
+        if (null != cursor) {
+            movies = new Movie[cursor.getCount()];
             int currentMovieIndex = 0;
             while (cursor.moveToNext()) {
                 final Movie movie = getMovieFromCursor(cursor);
                 movies[currentMovieIndex++] = movie;
             }
-            setMovies(movies);
         }
+
+        setMovies(movies);
     }
 
     private Movie getMovieFromCursor(final Cursor cursor) {

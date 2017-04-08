@@ -122,8 +122,8 @@ public class BrowseMoviesActivity extends AppCompatActivity
         showLoadProgressBar();
         final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI, null, null, null,
                 null);
+        mAdapter.setMovies(cursor);
         if (null != cursor && cursor.getCount() != 0) {
-            mAdapter.setMovies(cursor);
             showMoviesList();
         } else {
             showErrorDisplay(R.string.error_no_movies);
@@ -209,6 +209,11 @@ public class BrowseMoviesActivity extends AppCompatActivity
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (R.id.menu_switch_favorites == mSelectedMovieList) {
             mAdapter.setMovies(data);
+            if (mAdapter.getItemCount() != 0) {
+                showMoviesList();
+            } else {
+                showErrorDisplay(R.string.error_no_movies);
+            }
         }
     }
 
@@ -216,6 +221,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
     public void onLoaderReset(Loader<Cursor> loader) {
         if (R.id.menu_switch_favorites == mSelectedMovieList) {
             mAdapter.setMovies((Cursor) null);
+            showErrorDisplay(R.string.error_no_internet);
         }
     }
 }

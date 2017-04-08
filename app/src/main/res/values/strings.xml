@@ -2,21 +2,21 @@
     <string name="app_name">Popular Movies</string>
 
     <!-- Browse Movies Activity -->
-    <string name="error_no_internet">Cannot load movies from the internet. Please try later.</string>
-    <string name="error_no_movies">There are no movies in this category.</string>
+    <string name="error_no_internet" translatable="true">Cannot load movies from the internet. Please try later.</string>
+    <string name="error_no_movies" translatable="true">There are no movies in this category.</string>
 
     <!-- Browse Movies Menu -->
-    <string name="action_switch_popular">Most Popular</string>
-    <string name="action_switch_highest_rated">Highest Rated</string>
-    <string name="action_switch_favorites">Favorites</string>
+    <string name="action_switch_popular" translatable="true">Most Popular</string>
+    <string name="action_switch_highest_rated" translatable="true">Highest Rated</string>
+    <string name="action_switch_favorites" translatable="true">Favorites</string>
 
     <!-- Movie Details Activity -->
-    <string name="label_trailers">Trailers</string>
-    <string name="label_reviews">Reviews</string>
-    <string name="label_original_title">(<xliff:g id="title" example="Fight Club">%s</xliff:g>)</string>
-    <string name="label_user_rating">User rating: <xliff:g id="rating" example="2">%s</xliff:g></string>
-    <string name="label_release_date">Release date: <xliff:g id="date" example="Jan 3, 2011">%s</xliff:g></string>
-    <string name="button_add_to_favorites">Add To Favorites</string>
-    <string name="button_remove_from_favorites">Remove From Favorites</string>
-    <string name="error_no_video_player">Cannot find video player app.</string>
+    <string name="label_trailers" translatable="true">Trailers</string>
+    <string name="label_reviews" translatable="true">Reviews</string>
+    <string name="label_original_title" translatable="true">(<xliff:g id="title" example="Fight Club">%s</xliff:g>)</string>
+    <string name="label_user_rating" translatable="true">User rating: <xliff:g id="rating" example="2">%s</xliff:g></string>
+    <string name="label_release_date" translatable="true">Release date: <xliff:g id="date" example="Jan 3, 2011">%s</xliff:g></string>
+    <string name="button_add_to_favorites" translatable="true">Add To Favorites</string>
+    <string name="button_remove_from_favorites" translatable="true">Remove From Favorites</string>
+    <string name="error_no_video_player" translatable="true">Cannot find video player app.</string>
 </resources>

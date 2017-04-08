@@ -99,9 +99,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
                         null,
                         null,
                         null);
-                if (null != cursor && cursor.getCount() != 0) {
-                    mAdapter.setMovies(cursor);
-                }
+                mAdapter.setMovies(cursor);
                 break;
             default:
                 Log.w(LOG_TAG, "Menu selection is not handled. ItemId: " + itemId);

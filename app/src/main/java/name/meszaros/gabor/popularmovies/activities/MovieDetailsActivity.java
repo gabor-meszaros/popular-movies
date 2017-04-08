@@ -71,8 +71,14 @@ public class MovieDetailsActivity extends AppCompatActivity
     @BindView(R.id.text_movie_synopsis)
     TextView mSynopsisTextView;
 
+    @BindView(R.id.text_trailers_label)
+    TextView mTrailersLabelTextView;
+
     @BindView(R.id.recycler_trailers)
     RecyclerView mTrailersRecyclerView;
+
+    @BindView(R.id.text_reviews_label)
+    TextView mReviewsLabelTextView;
 
     @BindView(R.id.recycler_reviews)
     RecyclerView mReviewsRecyclerView;
@@ -152,7 +158,7 @@ public class MovieDetailsActivity extends AppCompatActivity
                          @Override
                          public void onFailure(final Call<ReviewListResponse> call,
                                                final Throwable t) {
-
+                             hideDynamicContent();
                          }
                      }
         );
@@ -173,10 +179,17 @@ public class MovieDetailsActivity extends AppCompatActivity
                          @Override
                          public void onFailure(final Call<TrailerListResponse> call,
                                                final Throwable t) {
-
+                             hideDynamicContent();
                          }
                      }
         );
+    }
+
+    private void hideDynamicContent() {
+        mReviewsLabelTextView.setVisibility(View.GONE);
+        mReviewsRecyclerView.setVisibility(View.GONE);
+        mTrailersLabelTextView.setVisibility(View.GONE);
+        mTrailersRecyclerView.setVisibility(View.GONE);
     }
 
     private void initializePosterImageView() {

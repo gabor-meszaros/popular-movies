@@ -1,6 +1,7 @@
 package name.meszaros.gabor.popularmovies.adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
+
 import name.meszaros.gabor.popularmovies.R;
+import name.meszaros.gabor.popularmovies.data.MoviesContract.MovieEntry;
 import name.meszaros.gabor.popularmovies.models.Movie;
 
 /**
@@ -52,6 +56,47 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     public void setMovies(final Movie[] movies) {
         this.mMovies = movies;
         notifyDataSetChanged();
+    }
+
+    public void setMovies(final Cursor cursor) {
+        if (null != cursor && cursor.getCount() != 0) {
+            final Movie[] movies = new Movie[cursor.getCount()];
+            int currentMovieIndex = 0;
+            while (cursor.moveToNext()) {
+                final Movie movie = getMovieFromCursor(cursor);
+                movies[currentMovieIndex++] = movie;
+            }
+            setMovies(movies);
+        }
+    }
+
+    private Movie getMovieFromCursor(final Cursor cursor) {
+        if (null != cursor && cursor.getCount() != 0) {
+            final Movie movie = new Movie();
+
+            movie.setId(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_ID)));
+            movie.setTitle(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_TITLE)));
+
+            final int originalTitleColumnIndex =
+                    cursor.getColumnIndex(MovieEntry.COLUMN_ORIGINAL_TITLE);
+            movie.setOriginalTitle(cursor.getString(originalTitleColumnIndex));
+
+            movie.setSynopsis(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_SYNOPSIS)));
+
+            final int userRatingColumnIndex = cursor.getColumnIndex(MovieEntry.COLUMN_USER_RATING);
+            movie.setUserRating(cursor.getString(userRatingColumnIndex));
+
+            final int releaseDateColumnIndex = cursor.getColumnIndex(MovieEntry.COLUMN_RELEASE_DATE);
+            final int epochMilliseconds = cursor.getInt(releaseDateColumnIndex);
+            movie.setReleaseDate(new Date(epochMilliseconds));
+
+            final int posterPathColumnIndex = cursor.getColumnIndex(MovieEntry.COLUMN_POSTER_PATH);
+            movie.setPosterPath(cursor.getString(posterPathColumnIndex));
+
+            return movie;
+        } else {
+            return null;
+        }
     }
 
     public Movie[] getMovies() {

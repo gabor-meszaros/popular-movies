@@ -1,6 +1,5 @@
 package name.meszaros.gabor.popularmovies.activities;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,11 +15,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import name.meszaros.gabor.popularmovies.data.MoviesContract;
 import name.meszaros.gabor.popularmovies.data.MoviesContract.MovieEntry;
 import name.meszaros.gabor.popularmovies.network.FetchMoviesTask;
 import name.meszaros.gabor.popularmovies.models.Movie;
@@ -104,23 +100,7 @@ public class BrowseMoviesActivity extends AppCompatActivity
                         null,
                         null);
                 if (null != cursor && cursor.getCount() != 0) {
-                    final Movie[] movies = new Movie[cursor.getCount()];
-                    int currentMovieIndex = 0;
-                    while (cursor.moveToNext()) {
-                        final Movie movie = new Movie();
-
-                        movie.setId(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_ID)));
-                        movie.setTitle(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_TITLE)));
-                        movie.setOriginalTitle(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_ORIGINAL_TITLE)));
-                        movie.setSynopsis(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_SYNOPSIS)));
-                        movie.setUserRating(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_USER_RATING)));
-                        final int epochMilliseconds = cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_RELEASE_DATE));
-                        movie.setReleaseDate(new Date(epochMilliseconds));
-                        movie.setPosterPath(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_POSTER_PATH)));
-
-                        movies[currentMovieIndex++] = movie;
-                    }
-                    mAdapter.setMovies(movies);
+                    mAdapter.setMovies(cursor);
                 }
                 break;
             default:

@@ -47,9 +47,6 @@ public class MovieDetailsActivity extends AppCompatActivity
     private static final double MOVIE_POSTER_WIDTH_HEIGHT_RATIO = 40.0 / 27.0;
     private static final double SCREEN_WIDTH_POSTER_WIDTH_RATIO = 0.4;
 
-    private static final String USER_RATING_TEXT_PREFIX = "User rating: ";
-    private static final String RELEASE_DATE_TEXT_PREFIX = "Release date: ";
-
     @BindView(R.id.text_movie_title)
     TextView mTitleTextView;
 

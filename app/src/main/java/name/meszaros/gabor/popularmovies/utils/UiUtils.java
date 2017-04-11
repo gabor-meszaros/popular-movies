@@ -1,6 +1,6 @@
 package name.meszaros.gabor.popularmovies.utils;
 
-import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  * manipulation, formatting, etc.).
  */
 public final class UiUtils {
-    private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd MMM YYYY");
+    private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd MMM yyyy");
 
     public static String formatReleaseDate(final Date date) {
         return DATE_FORMATTER.format(date);

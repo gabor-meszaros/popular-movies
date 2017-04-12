@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import name.meszaros.gabor.popularmovies.data.MoviesContract.MovieEntry;
@@ -71,9 +74,9 @@ public class BrowseMoviesActivity extends AppCompatActivity
         if (null == savedInstanceState) {
             loadMovies(FetchMoviesTask.LIST_POPULAR);
         } else {
-            final Movie[] savedMovies =
-                    (Movie[]) savedInstanceState.getParcelableArray(SAVED_MOVIES_KEY);
-            mAdapter.setMovies(savedMovies);
+            final ArrayList<Movie> savedMovieList = savedInstanceState.getParcelableArrayList(SAVED_MOVIES_KEY);
+            final Movie[] savedMovieArray = savedMovieList.toArray(new Movie[0]);
+            mAdapter.setMovies(savedMovieArray);
             mSelectedMovieList = savedInstanceState.getInt(SAVED_SELECTED_MOVIE_LIST_KEY);
             showMoviesList();
         }
@@ -84,8 +87,8 @@ public class BrowseMoviesActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        final Movie[] movies = mAdapter.getMovies();
-        outState.putParcelableArray(SAVED_MOVIES_KEY, movies);
+        final ArrayList<Movie> movies = new ArrayList(Arrays.asList(mAdapter.getMovies()));
+        outState.putParcelableArrayList(SAVED_MOVIES_KEY, movies);
         outState.putInt(SAVED_SELECTED_MOVIE_LIST_KEY, mSelectedMovieList);
     }
 

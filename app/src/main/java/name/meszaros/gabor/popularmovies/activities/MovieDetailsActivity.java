@@ -1,5 +1,6 @@
 package name.meszaros.gabor.popularmovies.activities;
 
+import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -121,26 +122,8 @@ public class MovieDetailsActivity extends AppCompatActivity
             mTrailersRecyclerView.setAdapter(mTrailersAdapter);
             loadTrailers(movieId);
 
-            if (isFavoriteMovie(movieId)) {
-                mFavoriteButton.setText(getString(R.string.button_remove_from_favorites));
-            } else {
-                mFavoriteButton.setText(getString(R.string.button_add_to_favorites));
-            }
+            setFavoriteButtonText(movieId);
         }
-    }
-
-    private boolean isFavoriteMovie(final String movieId) {
-        final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI,
-                new String[]{MovieEntry.COLUMN_ID},
-                MovieEntry.COLUMN_ID + "=?",
-                new String[]{movieId},
-                null);
-
-        final boolean favoriteMovie = (null != cursor && cursor.getCount() != 0);
-
-        if (null != cursor) cursor.close();
-
-        return favoriteMovie;
     }
 
     private void loadReviews(final String movieId) {
@@ -183,6 +166,33 @@ public class MovieDetailsActivity extends AppCompatActivity
                          }
                      }
         );
+    }
+
+    private void setFavoriteButtonText(final String movieId) {
+        final AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+
+                final boolean favoriteMovie = (null != cursor && cursor.getCount() != 0);
+
+                if (favoriteMovie) {
+                    mFavoriteButton.setText(getString(R.string.button_remove_from_favorites));
+                } else {
+                    mFavoriteButton.setText(getString(R.string.button_add_to_favorites));
+                }
+
+                if (null != cursor) cursor.close();
+            }
+        };
+
+        final int anyId = 42; // We will not use it in the result handler function
+        asyncQueryHandler.startQuery(anyId,
+                null,
+                MovieEntry.CONTENT_URI,
+                new String[]{MovieEntry.COLUMN_ID},
+                MovieEntry.COLUMN_ID + "=?",
+                new String[]{movieId},
+                null);
     }
 
     private void hideDynamicContent() {
@@ -238,13 +248,25 @@ public class MovieDetailsActivity extends AppCompatActivity
             values.put(MovieEntry.COLUMN_RELEASE_DATE, releaseDate);
             values.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
 
-            getContentResolver().insert(MovieEntry.CONTENT_URI, values);
+            final AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+                @Override
+                protected void onInsertComplete(int token, Object cookie, Uri uri) {
+                    favoritesButton.setText(getString(R.string.button_remove_from_favorites));
+                }
+            };
+            final int anyId = 42; // We will not use it in the result handler function
+            asyncQueryHandler.startInsert(anyId, null, MovieEntry.CONTENT_URI, values);
 
-            favoritesButton.setText(getString(R.string.button_remove_from_favorites));
         } else {
-            getContentResolver().delete(MovieEntry.CONTENT_URI, MovieEntry.COLUMN_ID + "=?",
-                    new String[]{movie.getId()});
-            favoritesButton.setText(getString(R.string.button_add_to_favorites));
+            final AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+                @Override
+                protected void onDeleteComplete(int token, Object cookie, int result) {
+                    favoritesButton.setText(getString(R.string.button_add_to_favorites));
+                }
+            };
+            final int anyId = 42; // We will not use it in the result handler function
+            asyncQueryHandler.startDelete(anyId, null, MovieEntry.CONTENT_URI,
+                    MovieEntry.COLUMN_ID + "=?", new String[]{movie.getId()});
         }
     }
 

@@ -1,5 +1,6 @@
 package name.meszaros.gabor.popularmovies.activities;
 
+import android.content.AsyncQueryHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -123,14 +124,24 @@ public class BrowseMoviesActivity extends AppCompatActivity
 
     private void loadFavoriteMovies() {
         showLoadProgressBar();
-        final Cursor cursor = getContentResolver().query(MovieEntry.CONTENT_URI, null, null, null,
-                null);
-        mAdapter.setMovies(cursor);
-        if (null != cursor && cursor.getCount() != 0) {
-            showMoviesList();
-        } else {
-            showErrorDisplay(R.string.error_no_movies);
-        }
+
+        final AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+                mAdapter.setMovies(cursor);
+
+                if (0 != mAdapter.getItemCount()) {
+                    showMoviesList();
+                } else {
+                    showErrorDisplay(R.string.error_no_movies);
+                }
+
+                if (null != cursor) cursor.close();
+            }
+        };
+
+        final int anyId = 42; // We will not use it in the result handler function
+        asyncQueryHandler.startQuery(anyId, null, MovieEntry.CONTENT_URI, null, null, null, null);
     }
 
     @Override

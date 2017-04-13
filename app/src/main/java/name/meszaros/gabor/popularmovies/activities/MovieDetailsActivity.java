@@ -237,16 +237,7 @@ public class MovieDetailsActivity extends AppCompatActivity
         final Intent intent = getIntent();
         final Movie movie = intent.getParcelableExtra(EXTRA_MOVIE);
         if (favoritesButtonText.equals(getString(R.string.button_add_to_favorites))) {
-            final ContentValues values = new ContentValues();
-
-            values.put(MovieEntry.COLUMN_ID, movie.getId());
-            values.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
-            values.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
-            values.put(MovieEntry.COLUMN_SYNOPSIS, movie.getSynopsis());
-            values.put(MovieEntry.COLUMN_USER_RATING, movie.getUserRating());
-            final String releaseDate = String.valueOf(movie.getReleaseDate().getTime());
-            values.put(MovieEntry.COLUMN_RELEASE_DATE, releaseDate);
-            values.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+            final ContentValues values = getContentValuesFromMovie(movie);
 
             final AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
                 @Override
@@ -268,6 +259,23 @@ public class MovieDetailsActivity extends AppCompatActivity
             asyncQueryHandler.startDelete(anyId, null, MovieEntry.CONTENT_URI,
                     MovieEntry.COLUMN_ID + "=?", new String[]{movie.getId()});
         }
+    }
+
+    private ContentValues getContentValuesFromMovie(final Movie movie) {
+        final ContentValues values = new ContentValues();
+
+        values.put(MovieEntry.COLUMN_ID, movie.getId());
+        values.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
+        values.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
+        values.put(MovieEntry.COLUMN_SYNOPSIS, movie.getSynopsis());
+        values.put(MovieEntry.COLUMN_USER_RATING, movie.getUserRating());
+
+        final String releaseDate = String.valueOf(movie.getReleaseDate().getTime());
+        values.put(MovieEntry.COLUMN_RELEASE_DATE, releaseDate);
+
+        values.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+
+        return values;
     }
 
     private String formatReleaseDateText(final Date releaseDate) {

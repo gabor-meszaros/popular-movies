@@ -16,7 +16,7 @@
         android:id="@+id/text_error_display"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/error_textview_padding"
+        android:layout_margin="@dimen/error_textview_padding"
         android:textAlignment="center"
         android:text="@string/error_no_internet"
         android:visibility="invisible"/>

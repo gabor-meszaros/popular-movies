@@ -27,4 +27,8 @@
 
     <!-- Error TextView padding. -->
     <dimen name="error_textview_padding">60dp</dimen>
+
+    <!-- Element spacing -->
+    <dimen name="space_small">14dp</dimen>
+    <dimen name="space_medium">22dp</dimen>
 </resources>

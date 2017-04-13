@@ -39,7 +39,6 @@ public class MoviesDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(final SQLiteDatabase database, final int oldVersion,
                           final int newVersion) {
-        database.execSQL("DROP TABLE IF EXISTS " + MovieEntry.TABLE_NAME);
-        onCreate(database);
+        // There is no new version of the DB so no need to define Upgrade logic yet
     }
 }

@@ -19,4 +19,9 @@
     <string name="button_add_to_favorites" translatable="true">Add To Favorites</string>
     <string name="button_remove_from_favorites" translatable="true">Remove From Favorites</string>
     <string name="error_no_video_player" translatable="true">Cannot find video player app.</string>
+    <string name="share_movie_text" translatable="true">I\'m going to watch <xliff:g id="movie" example="Fight Club">%s</xliff:g>. Anyone want to join me?</string>
+    <string name="share_movie_text_with_trailer" translatable="true">I\'m going to watch <xliff:g id="movie" example="Fight Club">%s</xliff:g> (<xliff:g id="trailer" example="https://www.youtube.com/watch?v=oHg5SJYRHA0">%s</xliff:g>). Anyone want to join me?</string>
+
+    <!-- Browse Movies Menu -->
+    <string name="action_share" translatable="true">Share</string>
 </resources>

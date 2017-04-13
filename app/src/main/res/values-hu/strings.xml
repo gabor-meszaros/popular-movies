@@ -19,4 +19,9 @@
     <string name="button_add_to_favorites" translatable="true">Hozzáadás a kedvencekhez</string>
     <string name="button_remove_from_favorites" translatable="true">Törlés a kedvencekből</string>
     <string name="error_no_video_player" translatable="true">Nem található videó lejátszó app.</string>
+    <string name="share_movie_text" translatable="true">Ezt a filmet látnom kell: <xliff:g id="movie" example="Fight Club">%s</xliff:g>. Akar valaki csatlakozni?</string>
+    <string name="share_movie_text_with_trailer" translatable="true">Ezt a filmet látnom kell: <xliff:g id="movie" example="Fight Club">%s</xliff:g> (<xliff:g id="trailer" example="https://www.youtube.com/watch?v=oHg5SJYRHA0">%s</xliff:g>). Akar valaki csatlakozni?</string>
+
+    <!-- Browse Movies Menu -->
+    <string name="action_share" translatable="true">Megosztás</string>
 </resources>

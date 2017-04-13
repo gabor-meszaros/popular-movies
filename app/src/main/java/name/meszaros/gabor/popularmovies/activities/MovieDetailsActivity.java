@@ -5,11 +5,15 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -229,6 +233,49 @@ public class MovieDetailsActivity extends AppCompatActivity
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_movie_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        final int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.menu_share:
+                shareMovie();
+                break;
+            default:
+                Log.w(LOG_TAG, "Menu selection is not handled. ItemId: " + itemId);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareMovie() {
+        final String mimeType = "text/plain";
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setText(createShareMovieIntentText())
+                .startChooser();
+    }
+
+    private String createShareMovieIntentText() {
+        final String movieTitle = mTitleTextView.getText().toString();
+        final boolean movieHasAtLeastOneTrailer = (0 != mTrailersAdapter.getItemCount());
+        if (movieHasAtLeastOneTrailer) {
+            final Trailer[] trailers = mTrailersAdapter.getTrailers();
+            final Trailer firstTrailer = trailers[0];
+            final String firstTrailerLink = firstTrailer.getLink();
+
+            return getString(R.string.share_movie_text_with_trailer, movieTitle, firstTrailerLink);
+        } else {
+            return getString(R.string.share_movie_text, movieTitle);
+        }
     }
 
     public void onClickFavoritesButton(final View view) {
